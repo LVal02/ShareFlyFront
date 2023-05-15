@@ -23,7 +23,6 @@ export default function SignUp() {
     const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     //Validation d'au moins une lettre
     const validateName = (name) => /^[A-Za-z]{1,}$/.test(name);
-    
     //Validation du mot de passe qui contient au moins un charactere spécial, une maj et une longueur de plus de 8
     // const validatePassword = (password) => /^(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/.test(password);
     const validatePassword = (password) => password.length >= 8;
@@ -113,5 +112,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#000000',
     borderBottomWidth: 1,
     fontSize: 16,
+  },
+  button: {
+    alignItems: 'center',
+    paddingTop: 8,
+    width: '100%',
+    marginTop: 30,
+    backgroundColor: '#fbe29c',
+    borderRadius: 1,
   },
 });
