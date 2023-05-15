@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   username: null,
   token: null,
+  flight: null,
+  date: null,
   photos: [],
 };
 
@@ -16,6 +18,12 @@ const userSlice = createSlice({
     updateToken: (state, action) => {
       state.token = action.payload;
     },
+    updateFlight: (state, action) => {
+        state.Flight = action.payload;
+    },
+    updateDate: (state, action) => {
+        state.date = action.payload;
+    },
     addPhoto: (state, action) => {
       state.photos.push(action.payload);
     },
@@ -25,5 +33,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { updateUsername, updateToken, addPhoto, removePhoto } = userSlice.actions;
+export const { updateUsername, updateToken,updateFlight,updateDate, addPhoto, removePhoto } = userSlice.actions;
 export default userSlice.reducer;

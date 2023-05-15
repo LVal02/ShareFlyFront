@@ -37,7 +37,7 @@ export default function App() {
             let iconName;
 
             if (route.name === 'Submission') {
-              iconName = 'home';
+              iconName = 'edit';
             } else if (route.name === 'Chat') {
               iconName = 'comments-o';
             } else if (route.name === 'Profil') {
