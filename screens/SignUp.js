@@ -42,7 +42,7 @@ export default function SignUp() {
                         console.log(user);
                         navigation.navigate('TabNavigator', { screen: 'Submission' });
                     }else {
-                        setErrorMessage('Invalid input'); // Mise à jour de la variable d'état avec le message d'erreur
+                        setErrorMessage('Invalid input or already'); // Mise à jour de la variable d'état avec le message d'erreur
                       }
                     })
         } else {
