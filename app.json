@@ -15,13 +15,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "iosClientId": "1072790423484-nqaqs3ga9phr3n2k8n0ef9skndtrshpg.apps.googleusercontent.com"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "androidClientId": "1072790423484-fjgnvkglpjkoupkpei4584mfkb052vr6.apps.googleusercontent.com"
     },
     "web": {
       "favicon": "./assets/favicon.png"

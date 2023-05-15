@@ -10,14 +10,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUsername } from '../reducers/user';
+
 import { useNavigation } from '@react-navigation/native';
+
+
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default function HomeScreen() {
-//   const user = useSelector((state) => state.user.value);
+
+
+
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -32,8 +39,7 @@ export default function HomeScreen() {
 
   const handleSubmit = () => {
     if (EMAIL_REGEX.test(email)) {
-    //   dispatch(updateEmail(email));
-      navigation.navigate('TabNavigator', { screen: 'Gallery' });
+      navigation.navigate('TabNavigator', { screen: 'Submission' });
     } else {
       setEmailError(true);
     }
@@ -57,11 +63,14 @@ export default function HomeScreen() {
           />
 
           {emailError && <Text style={styles.error}>Invalid email address</Text>}
-
           <TouchableOpacity onPress={() => handleSubmit()} style={styles.button} activeOpacity={0.8}>
-            <Text style={styles.textButton}>Go to gallery</Text>
+            <Text style={styles.textButton}>Login</Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')
+            } style={styles.button} activeOpacity={0.8} >
+        <Text style={styles.textButton}>Inscription</Text>
+          </TouchableOpacity>
       </KeyboardAvoidingView>
     </ImageBackground>
   );
@@ -76,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(	255, 190, 11, 0.4)'
+    backgroundColor: 'rgba(255, 190, 11, 0.4)'
   },
   image: {
     width: '100%',
@@ -116,5 +125,8 @@ const styles = StyleSheet.create({
   error: {
     marginTop: 10,
     color: 'red',
+  },
+  text: {
+    // Styles pour le texte utilisateur
   },
 });

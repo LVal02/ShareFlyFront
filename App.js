@@ -11,6 +11,7 @@ import FlightSubmissionScreen from "./screens/FlightSubmissionScreen";
 import FlightBoardScreen from "./screens/FlightBoardScreen";
 import UserProfilScreen from "./screens/UserProfilScreen";
 import ChatScreen from "./screens/ChatScreen";
+import SignUp from "./screens/SignUp";
 //______Screens
 
 
@@ -19,6 +20,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './reducers/user';
 
 const store = configureStore({
+  
   reducer: {
     user: userReducer,
   },
@@ -28,8 +30,11 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+
+
   // Navigation
   const TabNavigator = () => {
+
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -61,6 +66,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
