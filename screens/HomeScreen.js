@@ -24,11 +24,11 @@ export default function HomeScreen() {
   const [email, setEmail] = useState(null);
   const [emailError, setEmailError] = useState(false);
 
-//   useEffect(() => {
-//     if (user.email) {
-//       navigation.navigate('TabNavigator', { screen: 'Gallery' });
-//     }
-//   }, []);
+  useEffect(() => {
+    if (email) {
+      navigation.navigate('TabNavigator', { screen: 'Submission' });
+    }
+  }, []);
 
   const handleSubmit = () => {
     if (EMAIL_REGEX.test(email)) {
