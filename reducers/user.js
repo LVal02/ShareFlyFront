@@ -15,7 +15,7 @@ const userSlice = createSlice({
     updateUsername: (state, action) => {
       state.username = action.payload;
     },
-    updateToken: (state, action) => {
+    addToken: (state, action) => {
       state.token = action.payload;
     },
     updateFlight: (state, action) => {
@@ -33,5 +33,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { updateUsername, updateToken,updateFlight,updateDate, addPhoto, removePhoto } = userSlice.actions;
+export const { updateUsername, addToken,updateFlight,updateDate, addPhoto, removePhoto } = userSlice.actions;
 export default userSlice.reducer;
