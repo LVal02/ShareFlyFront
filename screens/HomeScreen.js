@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUsername } from '../reducers/user';
+import { updateUsername, addToken } from '../reducers/user';
 
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -44,7 +44,6 @@ export default function HomeScreen() {
 
   const handleSubmit = () => {
     if (EMAIL_REGEX.test(email)) {
-        
         fetch('https://share-fly-backend.vercel.app/users/signin', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -53,10 +52,10 @@ export default function HomeScreen() {
             .then(data => {
                 if (data.result) {
                     dispatch(addToken({ token: data.token }))
-                    console.log(user);
+                    dispatch(updateUsername({ username: data.username}))
                     navigation.navigate('TabNavigator', { screen: 'Submission' });
                 }else {
-                    setEmailError('Invalid input or already'); // Mise à jour de la variable d'état avec le message d'erreur
+                    setEmailError('Invalid email or password');
                   }
                 })
     } else {
