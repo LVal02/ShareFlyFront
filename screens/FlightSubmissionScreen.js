@@ -48,6 +48,10 @@ const handleSubmitFlight = () => {
       setErrorMessage("n'a pas pu fetch? Champs de saisi manquant ou invalide");
     });
 };
+const handleDatePress = (day) => {
+  const selectedDate = day.dateString;
+  setDateInputed(selectedDate);
+};
 
 
 
@@ -83,8 +87,8 @@ return (
             <Text style={styles.textButton}>Submit</Text>
           </TouchableOpacity>
     </View>
-      <View style={styles.CalendatContainer} >
-        <Calendar />
+      <View style={styles.calendarContainer}>
+        <Calendar onDayPress={handleDatePress} />
       </View>
     </View>
   );
