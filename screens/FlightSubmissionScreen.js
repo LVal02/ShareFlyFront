@@ -8,7 +8,7 @@ import { Calendar } from 'react-native-calendars';
 
 export default function FlightSubmissionScreen() {
 
-  const [date, setDate] = useState(new Date())
+  // const [date, setDate] = useState(new Date())
 
   const [flynumber, setFlynumber] = useState()
   const [userUser, setUserUser] = useState()
@@ -21,7 +21,7 @@ export default function FlightSubmissionScreen() {
 
 //Ici l'utilisateur mettra son n° et la date du vol
 const handleSubmitFlight = () => {
-  fetch("https://share-fly-backend.vercel.app/flights", {
+  fetch("https://share-fly-backend.vercel.app/flights/add", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -34,9 +34,9 @@ const handleSubmitFlight = () => {
     .then((data) => {
       if (data.result) {
         console.log(data)
-        // navigation.navigate("TabNavigator", { screen: "Submission" });
       } else {
         setError(data);
+        // setError(data.form);
         // Les fields qui ne passe pas la fonction validateForm sont saved dans error (je vais creer une condition plus tard pour changer les border #Léo)
         console.log(error);
         setErrorMessage("Invalid input or already added"); // Mise à jour de la variable d'état avec le message d'erreur
@@ -75,7 +75,7 @@ return (
         />
           {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
           <TouchableOpacity onPress={() => handleSubmitFlight()} style={styles.button} activeOpacity={0.8}>
-            <Text style={styles.textButton}>Login</Text>
+            <Text style={styles.textButton}>Submit</Text>
           </TouchableOpacity>
     </View>
       <View style={styles.CalendatContainer} >
