@@ -71,13 +71,7 @@ return (
         value={flyNumber}
         style={styles.input}
         />
-      {/* <TextInput
-        placeholder="User"
-        autoCapitalize="none"
-        onChangeText={(value) => setUserUser(value)}
-        value={userUser}
-        style={styles.input}
-        /> */}
+        
       <TextInput
         placeholder="Date"
         autoCapitalize="none"
