@@ -10,7 +10,7 @@ import { addToken } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-export default function SignUp() {
+export default function SignUpScreen() {
   const user = useSelector((state) => state.user.token);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +41,6 @@ export default function SignUp() {
       .then((data) => {
         if (data.result) {
           dispatch(addToken({ token: data.token }));
-          console.log(user);
           navigation.navigate("TabNavigator", { screen: "Submission" });
         } else {
           setError(data.form);

@@ -11,7 +11,7 @@ import FlightSubmissionScreen from "./screens/FlightSubmissionScreen";
 import FlightBoardScreen from "./screens/FlightBoardScreen";
 import UserProfilScreen from "./screens/UserProfilScreen";
 import ChatScreen from "./screens/ChatScreen";
-import SignUp from "./screens/SignUp";
+import SignUpScreen from "./screens/SignUpScreen";
 //______Screens
 
 
@@ -66,7 +66,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
         </Stack.Navigator>
       </NavigationContainer>

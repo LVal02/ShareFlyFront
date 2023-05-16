@@ -1756,6 +1756,13 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
+"@react-native-community/datetimepicker@6.7.3":
+  version "6.7.3"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.7.3.tgz#e6d75a42729265d8404d1d668c86926564abca2f"
+  integrity sha512-fXWbEdHMLW/e8cts3snEsbOTbnFXfUHeO2pkiDFX3fWpFoDtUrRWvn50xbY13IJUUKHDhoJ+mj24nMRVIXfX1A==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"
@@ -5565,7 +5572,7 @@ prompts@^2.3.2, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@*:
+prop-types@*, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -5702,6 +5709,13 @@ react-native-codegen@^0.71.5:
     flow-parser "^0.185.0"
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
+
+react-native-date-picker@^4.2.13:
+  version "4.2.13"
+  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.2.13.tgz#b5b894ee6c5a154a752f9094342170515e169ea6"
+  integrity sha512-cQ3k+ExXggAnytomeNGNrtV/l2a7WzVUeWKo7Gs2pv/z3TCjjlmKn0ZBMPgcThrFAgFMxgYI0XzKVKT7TPsOmw==
+  dependencies:
+    prop-types "^15.8.1"
 
 react-native-gradle-plugin@^0.71.17:
   version "0.71.18"

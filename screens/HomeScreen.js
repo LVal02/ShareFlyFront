@@ -51,8 +51,8 @@ export default function HomeScreen() {
         }).then(response => response.json())
             .then(data => {
                 if (data.result) {
-                    dispatch(addToken({ token: data.token }))
-                    dispatch(updateUsername({ username: data.username}))
+                    dispatch(addToken(data.token))
+                    dispatch(updateUsername(data.username))
                     navigation.navigate('TabNavigator', { screen: 'Submission' });
                 }else {
                     setEmailError('Invalid email or password');
