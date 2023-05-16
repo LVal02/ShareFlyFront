@@ -9,7 +9,7 @@ import { Calendar } from 'react-native-calendars';
 export default function FlightSubmissionScreen() {
   // const [date, setDate] = useState(new Date())
 
-  const [flyNumber, setFlynumber] = useState()
+  const [flyNumber, setFlyNumber] = useState()
   const [userUser, setUserUser] = useState()
   const [dateInputed, setDateInputed] = useState()
 
@@ -38,6 +38,7 @@ const handleSubmitFlight = () => {
       if (data.result) {
         console.log(data);
       } else {
+<<<<<<< HEAD
         setError(data);
         console.log(error);
         setErrorMessage("Data=null, Invalid input or already added");
@@ -55,6 +56,17 @@ const handleDatePress = (day) => {
   const selectedDate = day.dateString;
   setDateInputed(selectedDate);
 };
+=======
+        setError(data.error); // Update the error state with the specific error message
+        setErrorMessage("Invalid input or already added");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      setErrorMessage("Error creating flight");
+    });
+};
+>>>>>>> 656a27d56ccee1c6cc3d39154ee127757429723d
 
 
 
@@ -67,7 +79,7 @@ return (
       <TextInput
         placeholder="Flynumber"
         autoCapitalize="none"
-        onChangeText={(value) => setFlynumber(value)}
+        onChangeText={(value) => setFlyNumber(value)}
         value={flyNumber}
         style={styles.input}
         />
@@ -85,7 +97,6 @@ return (
           </TouchableOpacity>
     </View>
       <View style={styles.calendarContainer}>
-        <Calendar onDayPress={handleDatePress} />
       </View>
     </View>
   );
