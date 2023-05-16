@@ -17,7 +17,7 @@ export default function FlightSubmissionScreen() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const user = useSelector(state => state.user)
-
+console.log(user.token);
 //Ici l'utilisateur mettra son n° et la date du vol
 const handleSubmitFlight = () => {
   fetch("https://share-fly-backend.vercel.app/flights", {
@@ -25,7 +25,7 @@ const handleSubmitFlight = () => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       flyNumber: flyNumber,
-      user: user.username,
+      user: user.token,
       date: dateInputed,
     }),
   })
