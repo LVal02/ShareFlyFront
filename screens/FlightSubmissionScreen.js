@@ -10,7 +10,7 @@ export default function FlightSubmissionScreen() {
 
   // const [date, setDate] = useState(new Date())
 
-  const [flyNumber, setFlynumber] = useState()
+  const [flyNumber, setFlyNumber] = useState()
   const [userUser, setUserUser] = useState()
   const [dateInputed, setDateInputed] = useState()
 
@@ -42,7 +42,6 @@ const handleSubmitFlight = () => {
         setErrorMessage("Invalid input or already added"); // Mise à jour de la variable d'état avec le message d'erreur
       }
     });
-  setErrorMessage("Champs de saisi manquant ou invalide");
 };
 
 
@@ -55,7 +54,7 @@ return (
       <TextInput
         placeholder="Flynumber"
         autoCapitalize="none"
-        onChangeText={(value) => setFlynumber(value)}
+        onChangeText={(value) => setFlyNumber(value)}
         value={flyNumber}
         style={styles.input}
         />
