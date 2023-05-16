@@ -36,13 +36,23 @@ const handleSubmitFlight = () => {
         console.log(data)
       } else {
         setError(data);
-        // setError(data.form);
-        // Les fields qui ne passe pas la fonction validateForm sont saved dans error (je vais creer une condition plus tard pour changer les border #Léo)
         console.log(error);
-        setErrorMessage("Invalid input or already added"); // Mise à jour de la variable d'état avec le message d'erreur
+        setErrorMessage("Data=null, Invalid input or already added"); // Mise à jour de la variable d'état avec le message d'erreur
+
+        // Cette ligne sera exécutée uniquement si le fetch échoue
+        // setErrorMessage("n'a pas pu fetch? Champs de saisi manquant ou invalide");
       }
+    })
+    .catch((error) => {
+      console.log(error);
+      setErrorMessage("n'a pas pu fetch? Champs de saisi manquant ou invalide");
     });
 };
+const handleDatePress = (day) => {
+  const selectedDate = day.dateString;
+  setDateInputed(selectedDate);
+};
+
 
 
 return (
@@ -77,8 +87,8 @@ return (
             <Text style={styles.textButton}>Submit</Text>
           </TouchableOpacity>
     </View>
-      <View style={styles.CalendatContainer} >
-        <Calendar />
+      <View style={styles.calendarContainer}>
+        <Calendar onDayPress={handleDatePress} />
       </View>
     </View>
   );
