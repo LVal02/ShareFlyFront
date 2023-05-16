@@ -33,24 +33,16 @@ const handleSubmitFlight = () => {
     .then((response) => response.json())
     .then((data) => {
       if (data.result) {
-        console.log(data)
+        console.log(data);
       } else {
-        setError(data);
-        console.log(error);
-        setErrorMessage("Data=null, Invalid input or already added"); // Mise à jour de la variable d'état avec le message d'erreur
-
-        // Cette ligne sera exécutée uniquement si le fetch échoue
-        // setErrorMessage("n'a pas pu fetch? Champs de saisi manquant ou invalide");
+        setError(data.error); // Update the error state with the specific error message
+        setErrorMessage("Invalid input or already added");
       }
     })
     .catch((error) => {
-      console.log(error);
-      setErrorMessage("n'a pas pu fetch? Champs de saisi manquant ou invalide");
+      console.error(error);
+      setErrorMessage("Error creating flight");
     });
-};
-const handleDatePress = (day) => {
-  const selectedDate = day.dateString;
-  setDateInputed(selectedDate);
 };
 
 
@@ -88,7 +80,6 @@ return (
           </TouchableOpacity>
     </View>
       <View style={styles.calendarContainer}>
-        <Calendar onDayPress={handleDatePress} />
       </View>
     </View>
   );
