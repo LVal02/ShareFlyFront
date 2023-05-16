@@ -17,7 +17,6 @@ export default function FlightSubmissionScreen() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const user = useSelector(state => state.user)
-  console.log(user.username)
 
 //Ici l'utilisateur mettra son n° et la date du vol
 const handleSubmitFlight = () => {
@@ -48,7 +47,10 @@ const handleSubmitFlight = () => {
     });
 };
 
-
+const handleDatePress = (day) => {
+  const selectedDate = day.dateString;
+  setDateInputed(selectedDate);
+};
 
 return (
   <View style={styles.container}>
@@ -77,6 +79,8 @@ return (
           </TouchableOpacity>
     </View>
       <View style={styles.calendarContainer}>
+        <Calendar onDayPress={handleDatePress} />
+
       </View>
     </View>
   );
