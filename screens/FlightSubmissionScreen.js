@@ -10,7 +10,7 @@ export default function FlightSubmissionScreen() {
 
   // const [date, setDate] = useState(new Date())
 
-  const [flynumber, setFlynumber] = useState()
+  const [flyNumber, setFlynumber] = useState()
   const [userUser, setUserUser] = useState()
   const [dateInputed, setDateInputed] = useState()
 
@@ -21,11 +21,11 @@ export default function FlightSubmissionScreen() {
 
 //Ici l'utilisateur mettra son n° et la date du vol
 const handleSubmitFlight = () => {
-  fetch("https://share-fly-backend.vercel.app/flights/add", {
+  fetch("https://share-fly-backend.vercel.app/flights", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      flynumber: flynumber,
+      flyNumber: flyNumber,
       user: userUser,
       date: dateInputed,
     }),
@@ -56,7 +56,7 @@ return (
         placeholder="Flynumber"
         autoCapitalize="none"
         onChangeText={(value) => setFlynumber(value)}
-        value={flynumber}
+        value={flyNumber}
         style={styles.input}
         />
       <TextInput
