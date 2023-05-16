@@ -101,6 +101,10 @@ export default function HomeScreen() {
             } style={styles.button} activeOpacity={0.8} >
         <Text style={styles.textButton}>Inscription</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Snap')
+            } style={styles.button} activeOpacity={0.8} >
+        <Text style={styles.textButton}>Go To Snap</Text>
+          </TouchableOpacity>
       </KeyboardAvoidingView>
     </ImageBackground>
   );
