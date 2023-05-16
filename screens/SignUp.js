@@ -77,7 +77,6 @@ export default function SignUp() {
       <TextInput
         placeholder="Username"
         autoCapitalize="words"
-        secureTextEntry={true}
         onChangeText={(value) => setUsername(value)}
         value={username}
         style={styles.input}
