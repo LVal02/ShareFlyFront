@@ -7,7 +7,6 @@ import { Calendar } from 'react-native-calendars';
 // import DateInline from './TestDate';
 
 export default function FlightSubmissionScreen() {
-
   // const [date, setDate] = useState(new Date())
 
   const [flyNumber, setFlynumber] = useState()
@@ -18,6 +17,7 @@ export default function FlightSubmissionScreen() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const user = useSelector(state => state.user)
+  console.log(user.username)
 
 //Ici l'utilisateur mettra son n° et la date du vol
 const handleSubmitFlight = () => {
@@ -26,28 +26,31 @@ const handleSubmitFlight = () => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       flyNumber: flyNumber,
-      user: userUser,
+      user: user.username,
       date: dateInputed,
     }),
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log("Response:", response);
+      console.log("Data:", data);
+
       if (data.result) {
-        console.log(data)
+        console.log(data);
       } else {
         setError(data);
         console.log(error);
-        setErrorMessage("Data=null, Invalid input or already added"); // Mise à jour de la variable d'état avec le message d'erreur
-
-        // Cette ligne sera exécutée uniquement si le fetch échoue
-        // setErrorMessage("n'a pas pu fetch? Champs de saisi manquant ou invalide");
+        setErrorMessage("Data=null, Invalid input or already added");
       }
     })
     .catch((error) => {
       console.log(error);
-      setErrorMessage("n'a pas pu fetch? Champs de saisi manquant ou invalide");
+      setErrorMessage("Failed to fetch. Missing or invalid input fields.");
     });
 };
+
+
+
 const handleDatePress = (day) => {
   const selectedDate = day.dateString;
   setDateInputed(selectedDate);
@@ -68,13 +71,13 @@ return (
         value={flyNumber}
         style={styles.input}
         />
-      <TextInput
+      {/* <TextInput
         placeholder="User"
         autoCapitalize="none"
         onChangeText={(value) => setUserUser(value)}
         value={userUser}
         style={styles.input}
-        />
+        /> */}
       <TextInput
         placeholder="Date"
         autoCapitalize="none"
