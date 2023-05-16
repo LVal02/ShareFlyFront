@@ -32,6 +32,8 @@ export default function HomeScreen() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -55,11 +57,11 @@ export default function HomeScreen() {
                     dispatch(updateUsername(data.username))
                     navigation.navigate('TabNavigator', { screen: 'Submission' });
                 }else {
-                    setEmailError('Invalid email or password');
+                    setErrorMessage('Invalid email or password');
                   }
                 })
     } else {
-      setEmailError(true);
+      setErrorMessage(true);
     }
   };
 
@@ -90,7 +92,7 @@ export default function HomeScreen() {
       <TouchableOpacity onPress={handleTogglePasswordVisibility} style={styles.iconButton}>
         <FontAwesome name={showPassword ? 'eye-slash' : 'eye'} size={24} color="black"/>
       </TouchableOpacity>
-          {emailError && <Text style={styles.error}>Invalid email address</Text>}
+          {errorMessage && <Text style={styles.error}>Invalid email address</Text>}
           <TouchableOpacity onPress={() => handleSubmit()} style={styles.button} activeOpacity={0.8}>
             <Text style={styles.textButton}>Login</Text>
           </TouchableOpacity>
