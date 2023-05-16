@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUsername } from '../reducers/user';
 
 import { useNavigation } from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 
 
@@ -22,14 +24,17 @@ const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"
 
 export default function HomeScreen() {
 
-
-
-
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const [email, setEmail] = useState(null);
   const [emailError, setEmailError] = useState(false);
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   useEffect(() => {
     if (email) {
@@ -39,7 +44,21 @@ export default function HomeScreen() {
 
   const handleSubmit = () => {
     if (EMAIL_REGEX.test(email)) {
-      navigation.navigate('TabNavigator', { screen: 'Submission' });
+        
+        fetch('https://share-fly-backend.vercel.app/users/signin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password}),
+        }).then(response => response.json())
+            .then(data => {
+                if (data.result) {
+                    dispatch(addToken({ token: data.token }))
+                    console.log(user);
+                    navigation.navigate('TabNavigator', { screen: 'Submission' });
+                }else {
+                    setEmailError('Invalid input or already'); // Mise à jour de la variable d'état avec le message d'erreur
+                  }
+                })
     } else {
       setEmailError(true);
     }
@@ -48,20 +67,30 @@ export default function HomeScreen() {
   return (
     <ImageBackground source={require('../assets/flight.jpg')} style={styles.background}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
-        <Text style={styles.title}>FaceUp</Text>
+        <Text style={styles.title}>ShareFly</Text>
 
         <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Email"
-            autoCapitalize="none"
-            keyboardType="email-address"
-            textContentType="emailAddress"
-            autoCompleteType="email"
-            onChangeText={(value) => setEmail(value)}
-            value={email}
-            style={styles.input}
-          />
-
+        <TextInput
+                placeholder="Email"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                textContentType="emailAddress"
+                autoCompleteType="email"
+                onChangeText={(value) => setEmail(value)}
+                value={email}
+                style={styles.input}
+            />
+            <TextInput
+                placeholder="Mot de passe"
+                autoCapitalize="none"
+                secureTextEntry={!showPassword}
+                onChangeText={(value) => setPassword(value)}
+                value={password}
+                style={styles.input}
+            />
+      <TouchableOpacity onPress={handleTogglePasswordVisibility} style={styles.iconButton}>
+        <FontAwesome name={showPassword ? 'eye-slash' : 'eye'} size={24} color="black"/>
+      </TouchableOpacity>
           {emailError && <Text style={styles.error}>Invalid email address</Text>}
           <TouchableOpacity onPress={() => handleSubmit()} style={styles.button} activeOpacity={0.8}>
             <Text style={styles.textButton}>Login</Text>

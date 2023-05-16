@@ -25,7 +25,7 @@ export default function SignUp() {
     const validateName = (name) => /^[A-Za-z]{1,}$/.test(name);
     //Validation du mot de passe qui contient au moins un charactere spécial, une maj et une longueur de plus de 8
     // const validatePassword = (password) => /^(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/.test(password);
-    const validatePassword = (password) => password.length >= 8;
+    const validatePassword = (password) => password.length >= 3;
     const validateForm = () => validateEmail(email) && validateName(firstname)&& validateName(username) && validateName(lastname) && validatePassword(password);
     
     const handleSignUp = () => {
@@ -41,7 +41,7 @@ export default function SignUp() {
                         console.log(user);
                         navigation.navigate('TabNavigator', { screen: 'Submission' });
                     }else {
-                        setErrorMessage('Invalid input or already'); // Mise à jour de la variable d'état avec le message d'erreur
+                        setErrorMessage('Invalid input or already used mail'); // Mise à jour de la variable d'état avec le message d'erreur
                       }
                     })
         } else {
