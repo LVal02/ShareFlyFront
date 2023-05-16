@@ -38,25 +38,6 @@ const handleSubmitFlight = () => {
       if (data.result) {
         console.log(data);
       } else {
-<<<<<<< HEAD
-        setError(data);
-        console.log(error);
-        setErrorMessage("Data=null, Invalid input or already added");
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      setErrorMessage("Failed to fetch. Missing or invalid input fields.");
-    });
-};
-
-
-
-const handleDatePress = (day) => {
-  const selectedDate = day.dateString;
-  setDateInputed(selectedDate);
-};
-=======
         setError(data.error); // Update the error state with the specific error message
         setErrorMessage("Invalid input or already added");
       }
@@ -66,7 +47,6 @@ const handleDatePress = (day) => {
       setErrorMessage("Error creating flight");
     });
 };
->>>>>>> 656a27d56ccee1c6cc3d39154ee127757429723d
 
 
 
