@@ -39,10 +39,10 @@ const handleSubmitFlight = () => {
         // setError(data.form);
         // Les fields qui ne passe pas la fonction validateForm sont saved dans error (je vais creer une condition plus tard pour changer les border #Léo)
         console.log(error);
-        setErrorMessage("Invalid input or already added"); // Mise à jour de la variable d'état avec le message d'erreur
+        setErrorMessage("Data=null, Invalid input or already added"); // Mise à jour de la variable d'état avec le message d'erreur
       }
     });
-  setErrorMessage("Champs de saisi manquant ou invalide");
+  setErrorMessage("n'a pas pu fetch ?Champs de saisi manquant ou invalide");
 };
 
 
