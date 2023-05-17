@@ -1,7 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function FlightBoardScreen() {
+  const navigation = useNavigation();
+
   const dataFlight = [
     {
       _id: '64639b67a2c70f4fdfc7ffca',
@@ -35,7 +39,7 @@ export default function FlightBoardScreen() {
     const contentMaxHeight = useRef(50).current; // Définir la hauteur maximale souhaitée
 
     const handleToggle = () => {
-      //Animation de déroulement 
+      //Animation de déroulement lors du onPress
       if (!isExpanded) {
         Animated.timing(contentHeight, {
           toValue: contentMaxHeight,
@@ -62,9 +66,14 @@ export default function FlightBoardScreen() {
         <Text>Date: {flight.date}</Text>
         {isExpanded && (
           <Animated.View style={[styles.dropdownContent, { height: contentHeight }]}>
-            <Text>Additional Content</Text>
-            <Text>Additional Content</Text>
-            <Text>Additional Content</Text>
+            <View>
+              <Text>Additional Content</Text>
+              <Text>Additional Content</Text>
+              <Text>Additional Content</Text>
+            </View>
+            <TouchableOpacity style={styles.buttonBuy} onPress={() => navigation.navigate('Buy')} activeOpacity={0.8} >
+              <Text>Buy</Text>
+            </TouchableOpacity>
           </Animated.View>
         )}
       </TouchableOpacity>
@@ -97,5 +106,22 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
+  buttonBuy: {
+    backgroundColor: '#FF7F50',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 50,
+    height: 25,
+    marginTop: 10,
+  },
+  buyText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  }  
 });

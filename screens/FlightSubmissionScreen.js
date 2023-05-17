@@ -1,13 +1,19 @@
 import { StyleSheet, Text, View, TextInput,TouchableOpacity } from 'react-native';
-import DatePicker from 'react-native-date-picker'
+// import DatePicker from 'react-native-date-picker'  // Sera peut être mis en place si le temps le nous permet pour l'idée C'est d'avoir un calendrier glissable
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Calendar } from 'react-native-calendars';
+import { useNavigation } from '@react-navigation/native';
+import { updateDate, updateFlight } from '../reducers/user';
+
 
 // import DateInline from './TestDate';
 
 export default function FlightSubmissionScreen() {
   // const [date, setDate] = useState(new Date())
+  const dispatch = useDispatch()
+  
+  const navigation = useNavigation();
 
   const [flyNumber, setFlyNumber] = useState()
   const [userUser, setUserUser] = useState()
@@ -18,6 +24,7 @@ export default function FlightSubmissionScreen() {
 
   const user = useSelector(state => state.user)
 console.log(user);
+
 //Ici l'utilisateur mettra son n° et la date du vol
 const handleSubmitFlight = () => {
   fetch("https://share-fly-backend.vercel.app/flights", {
@@ -34,7 +41,10 @@ const handleSubmitFlight = () => {
       console.log("Data:", data);
       if (data.result) {
         console.log(data);
-        navigation.navigate('TabNavigator', { screen: 'Home' });
+        dispatch(updateFlight(flyNumber))
+        dispatch(updateDate(dateInputed))
+        navigation.navigate('FlightBoard')
+        // navigation.navigate('TabNavigator', { screen: 'Home' });
       } else {
         setError(data.error); // Update the error state with the specific error message
         setErrorMessage("Invalid input or already added");
@@ -66,7 +76,7 @@ return (
         />
         
       <TextInput
-        placeholder="Date"
+        placeholder="AAAA-MM-jj"
         autoCapitalize="none"
         onChangeText={(value) => setDateInputed(value)}
         value={dateInputed}

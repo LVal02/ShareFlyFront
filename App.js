@@ -19,6 +19,7 @@ import SnapScreen from "./screens/SnapScreen";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
+import BuyScreen from "./screens/BuyScreen";
 
 const store = configureStore({
   reducer: {
@@ -67,6 +68,7 @@ export default function App() {
           <Stack.Screen name="TabNavigator" component={MainTabNavigator} />
           <Stack.Screen name="Snap" component={SnapScreen} />
           <Stack.Screen name="FlightBoard" component={FlightBoardScreen} />
+          <Stack.Screen name="Buy" component={BuyScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
