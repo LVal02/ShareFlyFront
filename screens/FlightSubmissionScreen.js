@@ -17,7 +17,7 @@ export default function FlightSubmissionScreen() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const user = useSelector(state => state.user)
-console.log(user.token);
+console.log(user);
 //Ici l'utilisateur mettra son n° et la date du vol
 const handleSubmitFlight = () => {
   fetch("https://share-fly-backend.vercel.app/flights", {
@@ -36,6 +36,7 @@ const handleSubmitFlight = () => {
 
       if (data.result) {
         console.log(data);
+        navigation.navigate('TabNavigator', { screen: 'FlightBoard' });
       } else {
         setError(data.error); // Update the error state with the specific error message
         setErrorMessage("Invalid input or already added");
@@ -54,7 +55,7 @@ const handleDatePress = (day) => {
 
 return (
   <View style={styles.container}>
-      <Text>Bienvenue {userUser}</Text>
+      <Text>Bienvenue {user.username}</Text>
     <View style={styles.inputContainer}>  
       <Text>Mets tes données ici</Text>
       {/* <DatePicker date={date} onDateChange={setDate} /> */}

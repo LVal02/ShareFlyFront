@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { addToken } from "../reducers/user";
+import { addToken, updateUsername } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
@@ -41,16 +41,21 @@ export default function SignUpScreen() {
       .then((data) => {
         if (data.result) {
           dispatch(addToken({ token: data.token }));
+          dispatch(updateUsername(data.username))
           navigation.navigate("TabNavigator", { screen: "Submission" });
         } else {
           setError(data.form);
-          // Les fields qui ne passe pas la fonction validateForm sont saved dans error (je vais creer une condition plus tard pour changer les border #Léo)
+          // Les fields qui ne passent pas la fonction validateForm sont sauvegardés dans error (je vais créer une condition plus tard pour changer les bordures #Léo)
           console.log(error);
-          setErrorMessage("Invalid input or already"); // Mise à jour de la variable d'état avec le message d'erreur
+          setErrorMessage("Invalid input or already taken"); // Mise à jour de la variable d'état avec le message d'erreur
         }
+      })
+      .catch((error) => {
+        console.log("Error:", error); // Affichage de l'erreur dans la console
+        setErrorMessage("An error occurred. Please try again."); // Mise à jour de la variable d'état avec le message d'erreur
       });
-    setErrorMessage("Champs de saisi manquant ou invalide");
   };
+  
 
   return (
     <View style={styles.container}>

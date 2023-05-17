@@ -6,6 +6,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet, Text, View } from 'react-native';
 
 //Screens
+import StartScreen from "./screens/StartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import FlightSubmissionScreen from "./screens/FlightSubmissionScreen";
 import FlightBoardScreen from "./screens/FlightBoardScreen";
@@ -42,8 +43,8 @@ export default function App() {
           tabBarIcon: ({ color, size }) => {
             let iconName;
 
-            if (route.name === 'Submission') {
-              iconName = 'edit';
+            if (route.name === 'Home') {
+              iconName = 'home';
             } else if (route.name === 'Chat') {
               iconName = 'comments-o';
             } else if (route.name === 'Profil') {
@@ -55,7 +56,7 @@ export default function App() {
           tabBarInactiveTintColor: '#b2b2b2',
         })}
       >
-        <Tab.Screen name="Submission" component={FlightSubmissionScreen} />
+        <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Chat" component={ChatScreen} />
         <Tab.Screen name="Profil" component={UserProfilScreen} />
       </Tab.Navigator>
@@ -66,10 +67,13 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Start" component={StartScreen} />
+          <Stack.Screen name="FlightSubmission" component={FlightSubmissionScreen} />
+          
           <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
           <Stack.Screen name="Snap" component={SnapScreen} />
+          <Stack.Screen name="FlightBoard" component={FlightBoardScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
