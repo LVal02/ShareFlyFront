@@ -4,9 +4,13 @@ import { Camera, CameraType, FlashMode } from 'expo-camera';
 import { useDispatch } from 'react-redux';
 import { addPhoto } from '../reducers/user';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import SnapHeader from "../components/SnapHeader";
+
+
 
 export default function SnapScreen() {
+  const navigation = useNavigation()
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
@@ -32,7 +36,7 @@ export default function SnapScreen() {
 console.log(photo);
 
     formData.append('photoFromFront', {
-    uri: photo,
+    uri: photo.uri,
     name: 'photo.jpg',
     type: 'image/jpeg',
     });
@@ -56,10 +60,14 @@ console.log('formdata',formData);
 
   return (
     <Camera type={type} flashMode={flashMode} ref={cameraRef} style={styles.camera}>
+      <SnapHeader navigation={navigation} />
+
+
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           onPress={() => setType(type === CameraType.back ? CameraType.front : CameraType.back)}
           style={styles.button}
+          activeOpacity={0.8}
         >
           <FontAwesome name='rotate-right' size={25} color='#ffffff' />
         </TouchableOpacity>
@@ -67,13 +75,16 @@ console.log('formdata',formData);
         <TouchableOpacity
           onPress={() => setFlashMode(flashMode === FlashMode.off ? FlashMode.torch : FlashMode.off)}
           style={styles.button}
+          activeOpacity={0.8}
         >
           <FontAwesome name='flash' size={25} color={flashMode === FlashMode.off ? '#ffffff' : '#e8be4b'} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.snapContainer}>
-        <TouchableOpacity onPress={() => cameraRef && takePicture()}>
+        <TouchableOpacity onPress={() => cameraRef && takePicture()} 
+          activeOpacity={0.8}
+        >
           <FontAwesome name='circle-thin' size={95} color='#ffffff' />
         </TouchableOpacity>
       </View>

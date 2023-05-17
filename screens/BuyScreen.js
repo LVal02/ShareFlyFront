@@ -5,7 +5,7 @@ export default function BuyScreen() {
 
   return (
     <View style={styles.container}>
-        <Text>Ici on buy</Text>
+        <Text>Ici on sort sa carte</Text>
     </View>
   );
 }

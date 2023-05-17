@@ -14,8 +14,11 @@ import UserProfilScreen from "./screens/UserProfilScreen";
 import ChatScreen from "./screens/ChatScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import SnapScreen from "./screens/SnapScreen";
-// ______Screens
 
+// ______Screens
+//Components 
+import SnapHeader from "./components/SnapHeader";
+//______Components
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
@@ -66,7 +69,7 @@ export default function App() {
           <Stack.Screen name="FlightSubmission" component={FlightSubmissionScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="TabNavigator" component={MainTabNavigator} />
-          <Stack.Screen name="Snap" component={SnapScreen} />
+          <Stack.Screen name="Snap" component={SnapScreen} options={{ header: (props) => <SnapHeader {...props} /> }}/>
           <Stack.Screen name="FlightBoard" component={FlightBoardScreen} />
           <Stack.Screen name="Buy" component={BuyScreen} />
         </Stack.Navigator>
