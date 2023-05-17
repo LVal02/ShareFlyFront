@@ -35,6 +35,7 @@ export default function FlightBoardScreen() {
     const contentMaxHeight = useRef(50).current; // Définir la hauteur maximale souhaitée
 
     const handleToggle = () => {
+      //Animation de déroulement 
       if (!isExpanded) {
         Animated.timing(contentHeight, {
           toValue: contentMaxHeight,
