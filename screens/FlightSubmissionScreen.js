@@ -25,7 +25,7 @@ const handleSubmitFlight = () => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       flyNumber: flyNumber,
-      user: user.token,
+      token: user.token,
       date: dateInputed,
     }),
   })
