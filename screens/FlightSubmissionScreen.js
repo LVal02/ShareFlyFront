@@ -25,17 +25,16 @@ const handleSubmitFlight = () => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       flyNumber: flyNumber,
-      user: user.token,
+      token: user.token,
       date: dateInputed,
     }),
   })
     .then((response) => response.json())
     .then((data) => {
       console.log("Data:", data);
-
       if (data.result) {
         console.log(data);
-        navigation.navigate('TabNavigator', { screen: 'FlightBoard' });
+        navigation.navigate('TabNavigator', { screen: 'Home' });
       } else {
         setError(data.error); // Update the error state with the specific error message
         setErrorMessage("Invalid input or already added");
