@@ -31,7 +31,6 @@ const handleSubmitFlight = () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Response:", response);
       console.log("Data:", data);
 
       if (data.result) {

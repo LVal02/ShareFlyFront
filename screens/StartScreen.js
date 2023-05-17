@@ -55,7 +55,7 @@ export default function StartScreen() {
                 if (data.result) {
                     dispatch(addToken(data.token))
                     dispatch(updateUsername(data.username))
-                    navigation.navigate('TabNavigator', { screen: 'FlightBoard' });
+                    navigation.navigate('TabNavigator', { screen: 'Home' });
                 }else {
                     setErrorMessage('Invalid email or password');
                   }
@@ -65,13 +65,24 @@ export default function StartScreen() {
     }
   };
 
+  const autoLogin = () => {
+    dispatch(addToken("IjY0bA1PT-shvwqTZRKculkRbP3atUU-"))
+    dispatch(updateUsername("Dev"))
+    navigation.navigate('TabNavigator', { screen: 'Home' });
+  }
+
+
+
   return (
     <ImageBackground source={require('../assets/flight.jpg')} style={styles.background}>
+          <TouchableOpacity onPress={() => autoLogin()} style={styles.button} activeOpacity={0.8}>
+            <Text style={styles.textButton}>AutoLogin noFetch Token+username</Text>
+          </TouchableOpacity>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
         <Text style={styles.title}>ShareFly</Text>
 
         <View style={styles.inputContainer}>
-        <TextInput
+          <TextInput
                 placeholder="Email"
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -81,7 +92,7 @@ export default function StartScreen() {
                 value={email}
                 style={styles.input}
             />
-            <TextInput
+          <TextInput
                 placeholder="Mot de passe"
                 autoCapitalize="none"
                 secureTextEntry={!showPassword}
@@ -89,10 +100,10 @@ export default function StartScreen() {
                 value={password}
                 style={styles.input}
             />
-      <TouchableOpacity onPress={handleTogglePasswordVisibility} style={styles.iconButton}>
-        <FontAwesome name={showPassword ? 'eye-slash' : 'eye'} size={24} color="black"/>
-      </TouchableOpacity>
-          {errorMessage && <Text style={styles.error}>Invalid email address</Text>}
+          <TouchableOpacity onPress={handleTogglePasswordVisibility} style={styles.iconButton}>
+            <FontAwesome name={showPassword ? 'eye-slash' : 'eye'} size={24} color="black"/>
+          </TouchableOpacity>
+              {errorMessage && <Text style={styles.error}>Invalid email address</Text>}
           <TouchableOpacity onPress={() => handleSubmit()} style={styles.button} activeOpacity={0.8}>
             <Text style={styles.textButton}>Login</Text>
           </TouchableOpacity>
@@ -106,7 +117,7 @@ export default function StartScreen() {
           } style={styles.button} activeOpacity={0.8} >
           <Text style={styles.textButton}>Go To Snap</Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity onPress={() => navigation.navigate('FlightBoard')
             } style={styles.button} activeOpacity={0.8} >
           <Text style={styles.textButton}>Annonce Ici, A déplacer quand FlightSub sera finit</Text>
