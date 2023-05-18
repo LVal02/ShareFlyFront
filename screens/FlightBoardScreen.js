@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, Text,TextInput, View, TouchableOpacity, Animated, Modal, Button } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -61,9 +61,7 @@ export default function FlightBoardScreen() {
 
 // route post flight pour récupérer les données selon la date et le flyNumber
 const [flightData, setFlightData] = useState ([]);
-useEffect(() => {
-  fetchFlightData();
-}, []);
+
 const fetchFlightData = () => {
   fetch("https://share-fly-backend.vercel.app/kilos", {
     method: "POST",
@@ -159,7 +157,8 @@ const handleClose = () => {
     );
   };
    // Le map qui va prendre toute les données du dataKilo
-   const kilosAnnonce = flightData.map((annonce) => renderAnnonceItem(annonce));  
+  const kilosAnnonce = dataKilo.map((annonce) => renderAnnonceItem(annonce))
+  
   // rediriger l'utilisateur vers le screen enregistrer un flight s'il en n'a pas du coup faire une modale? pour informer l'utilisateur qu'il n'a rien
 
     //if   
