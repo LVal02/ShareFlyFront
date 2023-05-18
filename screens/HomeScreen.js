@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 30,
     backgroundColor: '#fbe29c',
-    borderRadius: 1,
+    borderRadius: 10,
   },
   textButton: {
     // fontFamily: 'Futura',
