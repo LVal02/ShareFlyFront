@@ -5,6 +5,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  ImageBackground
 } from "react-native";
 import { addToken, updateUsername } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,8 +59,9 @@ export default function SignUpScreen() {
   
 
   return (
+    <ImageBackground source={require('../assets/flight1.jpg')} style={styles.background}>
     <View style={styles.container}>
-      <Text>SignUpScreen</Text>
+      <Text style={styles.title}>SignUpScreen</Text>
       <TextInput
         placeholder="Email"
         autoCapitalize="none"
@@ -111,13 +113,21 @@ export default function SignUpScreen() {
       )}
       {/* Affichage du message d'erreur s'il y en a un */}
     </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    width: '100%',
+    height: '100%',
+  },
+  title:{
+    fontSize: 50,
+    marginBottom: 100,
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -126,13 +136,25 @@ const styles = StyleSheet.create({
     borderBottomColor: "#000000",
     borderBottomWidth: 1,
     fontSize: 16,
+    marginBottom: 20,
+    paddingVertical: 5,
+    fontSize: 20,
+    color: 'red',
   },
   button: {
     alignItems: "center",
     paddingTop: 8,
     width: "100%",
     marginTop: 30,
-    backgroundColor: "#fbe29c",
-    borderRadius: 1,
+    backgroundColor: "white",
+    opacity: 0.7,
+    borderRadius: 10,
+  },
+  textButton: {
+    height: 30,
+    fontWeight: "600",
+    fontSize: 16,
+    paddingTop: 5,
+    alignItems: "center",
   },
 });
