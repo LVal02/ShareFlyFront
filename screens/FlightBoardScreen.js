@@ -10,19 +10,19 @@ export default function FlightBoardScreen() {
   const user = useSelector(state => state.user)
   // console.log('flightScreeen user:',user);
 
-  const dataFlight = [
+  const dataKilo = [
     {
       _id: '64639b67a2c70f4fdfc7ffca',
-      flyNumber: '555XXX',
-      date: '2023-04-27T13:22:42.000Z',
-      users: [],
+      flight: '555XXX',
+      kilo: '10',
+      user: "Franc",
       __v: 3
     },
     {
       _id: '165165q4s89f48qs16161sd1',
-      flyNumber: '555XXX',
-      date: '2023-04-27T13:22:42.000Z',
-      users: [],
+      flight: '555XXX',
+      kilo: '50',
+      user: "Max",
       __v: 3
     }
   ];
@@ -138,7 +138,15 @@ const handleClose = () => {
               <Text>Additional Content</Text>
               <Text>Additional Content</Text>
             </View>
-            <TouchableOpacity style={styles.buttonBuy} onPress={() => navigation.navigate('Buy')} activeOpacity={0.8} >
+            <TouchableOpacity
+              style={styles.buttonBuy}
+              onPress={() => navigation.navigate('Buy', { 
+        //params Pour passer les données parents => enfants
+                flightId: flight._id,
+                date: flight.date,
+                kilo: flight.kilo })}
+              activeOpacity={0.8}
+            >
               <Text>Buy</Text>
             </TouchableOpacity>
           </Animated.View>
@@ -146,8 +154,8 @@ const handleClose = () => {
       </TouchableOpacity>
     );
   };
-   // Le map qui va prendre toute les données du dataFlight
-  const kilosAnnonce = dataFlight.map((flight) => renderFlightItem(flight))
+   // Le map qui va prendre toute les données du dataKilo
+  const kilosAnnonce = dataKilo.map((flight) => renderFlightItem(flight))
   
   // rediriger l'utilisateur vers le screen enregistrer un flight s'il en n'a pas
   // du coup faire une modale? pour informer l'utilisateur qu'il n'a rien

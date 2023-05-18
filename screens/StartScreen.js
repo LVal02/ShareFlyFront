@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUsername, addToken } from '../reducers/user';
+import { updateUsername, addToken, updateDate, updateFlyNumber } from '../reducers/user';
 
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -70,6 +70,8 @@ export default function StartScreen() {
   const autoLogin = () => {
     dispatch(addToken("IjY0bA1PT-shvwqTZRKculkRbP3atUU-"))
     dispatch(updateUsername("Dev"))
+    dispatch(updateDate("2023-05-01"))
+    dispatch(updateFlyNumber("OZ110"))
     navigation.navigate('TabNavigator', { screen: 'Home' });
   }
 
