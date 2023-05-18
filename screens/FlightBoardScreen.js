@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Text,TextInput, View, TouchableOpacity, Animated, Modal, Button } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 
@@ -7,7 +8,7 @@ import { useSelector } from 'react-redux';
 export default function FlightBoardScreen() {
   const navigation = useNavigation();
   const user = useSelector(state => state.user)
-  console.log('flightScreeen user:',user);
+  // console.log('flightScreeen user:',user);
 
   const dataFlight = [
     {
@@ -25,6 +26,7 @@ export default function FlightBoardScreen() {
       __v: 3
     }
   ];
+
   // route post pour mettre une annonce selon sa date de vol qui sera dans le réducers 
   const [errorMessage, setErrorMessage] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,8 +38,9 @@ export default function FlightBoardScreen() {
       token: user.token,
       flyNumber: user.flyNumber,
       date: user.date,
-      kilo: '10',
+      kilo: kilo,
     };
+    console.log('requestBody:', requestBody);
 
     fetch(`https://share-fly-backend.vercel.app/kilos`, {
       method: 'POST',
@@ -46,10 +49,12 @@ export default function FlightBoardScreen() {
     })
       .then(response => response.json())
       .then(data => {
+        console.log('Server Response:', data); // Ajouter cette ligne
         setResult(data.result ? 'Kilo added successfully' : `Error: ${data.error}`);
       })
       .catch(error => {
         setResult(`Error: ${error}`);
+        console.log(error);
       });
   };
 
@@ -142,7 +147,7 @@ const handleClose = () => {
     );
   };
    // Le map qui va prendre toute les données du dataFlight
-  const Flight = dataFlight.map((flight) => renderFlightItem(flight))
+  const kilosAnnonce = dataFlight.map((flight) => renderFlightItem(flight))
   
   // rediriger l'utilisateur vers le screen enregistrer un flight s'il en n'a pas
   // du coup faire une modale? pour informer l'utilisateur qu'il n'a rien
@@ -156,10 +161,11 @@ const handleClose = () => {
   return (
     <View style={styles.container}>
 
-<TouchableOpacity onPress={() => setModalVisible(true)} style={styles.square} activeOpacity={0.8}>
-      <Text style={styles.squareText}>+</Text>
-    </TouchableOpacity>
-
+      {/* Ici C'est le carré cliquable */}
+      <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.square} activeOpacity={0.8}>
+        <FontAwesome name="plus" size={24} color="black" />
+      </TouchableOpacity> 
+    {/* Pour faire apparaitre la modal */}
     <Modal visible={modalVisible} animationType="fade" transparent>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
@@ -181,8 +187,11 @@ const handleClose = () => {
         </View>
       </View>
     </Modal>
+    {/* afficher les possibles erreurs */}
       <Text style={styles.result}>{result}</Text>
-      {Flight}
+
+    {/* Les tableau des kilos */}
+      {kilosAnnonce}
     </View>
   );
 }

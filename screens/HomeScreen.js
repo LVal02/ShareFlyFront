@@ -15,7 +15,7 @@ export default function HomeScreen() {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('FlightBoard')
             } style={styles.button} activeOpacity={0.8} >
-          <Text style={styles.textButton}>regarder vos annonces Déjà Poster</Text>
+          <Text style={styles.textButton}>regarder annonces kilos d'après votre N° et date de vol</Text>
         </TouchableOpacity>
     </View>
   );
