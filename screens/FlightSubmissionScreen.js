@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Calendar } from 'react-native-calendars';
 import { useNavigation } from '@react-navigation/native';
-import { updateDate, updateFlight } from '../reducers/user';
+import { updateDate, updateFlyNumber } from '../reducers/user';
 
 
 // import DateInline from './TestDate';
@@ -23,7 +23,7 @@ export default function FlightSubmissionScreen() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const user = useSelector(state => state.user)
-console.log(user);
+console.log('flightSubmissionScreen user:',user);
 
 //Ici l'utilisateur mettra son n° et la date du vol
 const handleSubmitFlight = () => {
@@ -41,7 +41,7 @@ const handleSubmitFlight = () => {
       console.log("Data:", data);
       if (data.result) {
         console.log(data);
-        dispatch(updateFlight(flyNumber))
+        dispatch(updateFlyNumber(flyNumber))
         dispatch(updateDate(dateInputed))
         navigation.navigate('FlightBoard')
         // navigation.navigate('TabNavigator', { screen: 'Home' });

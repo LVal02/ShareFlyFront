@@ -64,7 +64,7 @@ export default function StartScreen() {
       setErrorMessage(true);
     }
   };
-
+// C'est le boutton qui auto "login" Je l'ai mis en place pour gagner du temps
   const autoLogin = () => {
     dispatch(addToken("IjY0bA1PT-shvwqTZRKculkRbP3atUU-"))
     dispatch(updateUsername("Dev"))
