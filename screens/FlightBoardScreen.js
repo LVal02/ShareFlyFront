@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 export default function FlightBoardScreen() {
   const navigation = useNavigation();
   const user = useSelector(state => state.user)
-  // console.log('flightScreeen user:',user);
+  console.log('flightBoardScreen user:',user);
 
   const dataKilo = [
     {
@@ -69,7 +69,7 @@ const fetchFlightData = () => {
     body: JSON.stringify({
       token: user.token,
       flyNumber: user.flyNumber,
-      date: date,
+      date: user.date,
     }),
   })
     .then((response) => response.json())
@@ -77,7 +77,6 @@ const fetchFlightData = () => {
       if (data.result) {
         setFlightData(data);
       } else {
-
         setErrorMessage("No flight found");
         console.log(error);
       }
@@ -143,8 +142,10 @@ const handleClose = () => {
               onPress={() => navigation.navigate('Buy', { 
         //params Pour passer les données parents => enfants
                 flightId: flight._id,
-                date: flight.date,
-                kilo: flight.kilo })}
+                date: user.date,
+                kilo: flight.kilo, 
+                user: flight.user,
+              })}
               activeOpacity={0.8}
             >
               <Text>Buy</Text>
@@ -157,14 +158,16 @@ const handleClose = () => {
    // Le map qui va prendre toute les données du dataKilo
   const kilosAnnonce = dataKilo.map((flight) => renderFlightItem(flight))
   
-  // rediriger l'utilisateur vers le screen enregistrer un flight s'il en n'a pas
-  // du coup faire une modale? pour informer l'utilisateur qu'il n'a rien
-  
-  const handleLongPress = () => {
-    setModalVisible(true);
+  // rediriger l'utilisateur vers le screen enregistrer un flight s'il en n'a pas du coup faire une modale? pour informer l'utilisateur qu'il n'a rien
+
+    //if   
+  //____________rediriger l'utilisateur vers le screen enregistrer un flight s'il en a pas
+
+  //Fermer la modal ajouter une annonce avec des kilos
+  const handleModalClose = () => {
+    setModalVisible(false);
   };
   
-  //____________rediriger l'utilisateur vers le screen enregistrer un flight s'il en a pas
   
   return (
     <View style={styles.container}>
@@ -174,7 +177,7 @@ const handleClose = () => {
         <FontAwesome name="plus" size={24} color="black" />
       </TouchableOpacity> 
     {/* Pour faire apparaitre la modal */}
-    <Modal visible={modalVisible} animationType="fade" transparent>
+    <Modal visible={modalVisible} animationType="fade" transparent={true} onRequestClose={handleModalClose}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <TextInput
