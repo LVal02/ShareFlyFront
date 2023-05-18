@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text,TextInput, View, TouchableOpacity, Animated, Modal, Button } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -61,7 +61,9 @@ export default function FlightBoardScreen() {
 
 // route post flight pour récupérer les données selon la date et le flyNumber
 const [flightData, setFlightData] = useState ([]);
-
+useEffect(() => {
+  fetchFlightData();
+}, []);
 const fetchFlightData = () => {
   fetch("https://share-fly-backend.vercel.app/kilos", {
     method: "POST",
@@ -99,8 +101,8 @@ const handleClose = () => {
       setExpandedFlights([...expandedFlights, flightId]);
     }
   };
-  const renderFlightItem = (flight) => {
-    const isExpanded = expandedFlights.includes(flight._id);
+  const renderAnnonceItem = (annonce) => {
+    const isExpanded = expandedFlights.includes(annonce._id);
     const contentHeight = useRef(new Animated.Value(0)).current;
     const contentMaxHeight = useRef(50).current; // Définir la hauteur maximale souhaitée
     
@@ -119,17 +121,18 @@ const handleClose = () => {
           useNativeDriver: false,
         }).start();
       }
-      handleFlightPress(flight._id);
+      handleFlightPress(annonce._id);
     };
 
+    //Ici c'est pour afficher les annonces 
     return (
       <TouchableOpacity
         style={styles.flightItem}
         onPress={handleToggle}
-        key={flight._id}
+        key={annonce._id}
         >
-        <Text>Fly Number: {flight.flyNumber}</Text>
-        <Text>Date: {flight.date}</Text>
+        <Text>Fly Number: {annonce.flyNumber}</Text>
+        <Text>Date: {annonce.date}</Text>
         {isExpanded && (
           <Animated.View style={[styles.dropdownContent, { height: contentHeight }]}>
             <View>
@@ -141,10 +144,10 @@ const handleClose = () => {
               style={styles.buttonBuy}
               onPress={() => navigation.navigate('Buy', { 
         //params Pour passer les données parents => enfants
-                flightId: flight._id,
+                flightId: annonce._id,
                 date: user.date,
-                kilo: flight.kilo, 
-                user: flight.user,
+                kilo: annonce.kilo, 
+                user: annonce.user,
               })}
               activeOpacity={0.8}
             >
@@ -156,8 +159,7 @@ const handleClose = () => {
     );
   };
    // Le map qui va prendre toute les données du dataKilo
-  const kilosAnnonce = dataKilo.map((flight) => renderFlightItem(flight))
-  
+   const kilosAnnonce = flightData.map((annonce) => renderAnnonceItem(annonce));  
   // rediriger l'utilisateur vers le screen enregistrer un flight s'il en n'a pas du coup faire une modale? pour informer l'utilisateur qu'il n'a rien
 
     //if   
