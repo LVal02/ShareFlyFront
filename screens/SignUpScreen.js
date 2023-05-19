@@ -41,12 +41,11 @@ export default function SignUpScreen() {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          dispatch(addToken({ token: data.token }));
-          dispatch(updateUsername(data.username))
+          dispatch(addToken(data.token));
+          dispatch(updateUsername(username))
           navigation.navigate("TabNavigator", { screen: "Submission" });
         } else {
           setError(data.form);
-          // Les fields qui ne passent pas la fonction validateForm sont sauvegardés dans error (je vais créer une condition plus tard pour changer les bordures #Léo)
           console.log(error);
           setErrorMessage("Invalid input or already taken"); // Mise à jour de la variable d'état avec le message d'erreur
         }

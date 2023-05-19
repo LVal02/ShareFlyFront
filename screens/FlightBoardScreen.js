@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text,TextInput, View, TouchableOpacity, Animated, Modal, Button } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -61,9 +61,12 @@ export default function FlightBoardScreen() {
 
 // route post flight pour récupérer les données selon la date et le flyNumber
 const [flightData, setFlightData] = useState ([]);
+useEffect (() => {
+
+},[])
 
 const fetchFlightData = () => {
-  fetch("https://share-fly-backend.vercel.app/kilos", {
+  fetch("https://share-fly-backend.vercel.app/kilos/find", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -78,7 +81,7 @@ const fetchFlightData = () => {
         setFlightData(data);
       } else {
         setErrorMessage("No flight found");
-        console.log(error);
+        console.log(data.error); // Utiliser "data.error" au lieu de "error"
       }
     })
     .catch((error) => {
@@ -86,9 +89,7 @@ const fetchFlightData = () => {
       console.log("Error:", error);
     });
 };
-const handleClose = () => {
-  setModalVisible(false);
-};
+
 
 //Pour les "Flight" ça devra prendre les kilos on doit fetch les annonces de kilos des autres personnes 
   const [expandedFlights, setExpandedFlights] = useState([]);
@@ -169,14 +170,15 @@ const handleClose = () => {
     setModalVisible(false);
   };
   
-  
+ 
   return (
     <View style={styles.container}>
 
       {/* Ici C'est le carré cliquable */}
-      <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.square} activeOpacity={0.8}>
+      <TouchableOpacity onPress={() =>{ setModalVisible(true),fetchFlightData()}} style={styles.square} activeOpacity={0.8}>
         <FontAwesome name="plus" size={24} color="black" />
       </TouchableOpacity> 
+      
     {/* Pour faire apparaitre la modal */}
     <Modal visible={modalVisible} animationType="fade" transparent={true} onRequestClose={handleModalClose}>
       <View style={styles.centeredView}>
