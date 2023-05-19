@@ -16,6 +16,7 @@ import { updateUsername, addToken } from '../reducers/user';
 
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { buildUnavailableHoursBlocks } from 'react-native-calendars/src/timeline/Packer';
 
 
 
@@ -79,7 +80,7 @@ export default function StartScreen() {
             <Text style={styles.textButton}>AutoLogin noFetch Token+username</Text>
           </TouchableOpacity>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
-        <Text style={styles.title}>ShareFly</Text>
+        <Text style={styles.title}>Welcome to ShareFly</Text>
 
         <View style={styles.inputContainer}>
           <TextInput
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 190, 11, 0.4)'
+    backgroundColor: 'rgba(255, 190, 11, 0.4)',
   },
   image: {
     width: '100%',
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: '600',
-    marginBottom: 20
+    marginBottom: 20,
   },
   inputContainer: {
     width: '85%',
