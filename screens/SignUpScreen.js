@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground
 } from "react-native";
-import { addToken, updateUsername } from "../reducers/user";
+import { addToken, updateUsername,updateFirstname, updateLastname } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
@@ -36,6 +36,7 @@ export default function SignUpScreen() {
         password: password,
         firstname: firstname,
         lastname: lastname,
+        
       }),
     })
       .then((response) => response.json())
@@ -43,6 +44,9 @@ export default function SignUpScreen() {
         if (data.result) {
           dispatch(addToken({ token: data.token }));
           dispatch(updateUsername(data.username))
+          dispatch(updateFirstname(firstname)); // Mettre à jour le firstname dans le reducer
+          dispatch(updateLastname(lastname)); // Mettre à jour le lastname dans le reducer
+    
           navigation.navigate("TabNavigator", { screen: "Submission" });
         } else {
           setError(data.form);
@@ -54,8 +58,10 @@ export default function SignUpScreen() {
       .catch((error) => {
         console.log("Error:", error); // Affichage de l'erreur dans la console
         setErrorMessage("An error occurred. Please try again."); // Mise à jour de la variable d'état avec le message d'erreur
+        
       });
   };
+  
   
 
   return (
