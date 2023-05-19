@@ -9,6 +9,7 @@ import SnapHeader from "../components/SnapHeader";
 
 
 
+
 export default function SnapScreen() {
   const navigation = useNavigation()
   const dispatch = useDispatch();
@@ -71,7 +72,6 @@ console.log('formdata',formData);
         >
           <FontAwesome name='rotate-right' size={25} color='#ffffff' />
         </TouchableOpacity>
-
         <TouchableOpacity
           onPress={() => setFlashMode(flashMode === FlashMode.off ? FlashMode.torch : FlashMode.off)}
           style={styles.button}
@@ -83,12 +83,14 @@ console.log('formdata',formData);
 
       <View style={styles.snapContainer}>
         <TouchableOpacity onPress={() => cameraRef && takePicture()} 
-          activeOpacity={0.8}
-        >
+          activeOpacity={0.8}>
+            
           <FontAwesome name='circle-thin' size={95} color='#ffffff' />
         </TouchableOpacity>
       </View>
     </Camera>
+
+    
   );
 }
 
@@ -110,10 +112,11 @@ const styles = StyleSheet.create({
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    borderRadius: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 22,
+    marginHorizontal: 10,
   },
-  snapContainer: {
+    snapContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
