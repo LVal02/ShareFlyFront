@@ -16,7 +16,7 @@ import { updateUsername, addToken, updateDate, updateFlyNumber, updateFlightObje
 
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { colors } from 'debug/src/browser';
+// import { colors } from 'debug/src/browser';
 
 
 
@@ -76,7 +76,6 @@ export default function StartScreen() {
     dispatch(updateFlightObjectId("646799ec255394f2222b4d41"))
     navigation.navigate('TabNavigator', { screen: 'Home' });
   }
-
 
 
   return (

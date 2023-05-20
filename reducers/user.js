@@ -6,6 +6,9 @@ const initialState = {
   flyNumber: null,
   date: null,
   photos: [],
+  flightObjectId: null,
+  lastname:null,
+  firstname:null,
 };
 
 const userSlice = createSlice({
@@ -42,5 +45,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { updateUsername, addToken,updateFlyNumber,updateDate, addPhoto, removePhoto } = userSlice.actions;
+export const { updateUsername, addToken,updateFlyNumber,updateDate, addPhoto,updateFlightObjectId, removePhoto, updateLastname, updateFirstname } = userSlice.actions;
 export default userSlice.reducer;
