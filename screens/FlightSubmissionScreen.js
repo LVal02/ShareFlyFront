@@ -65,12 +65,12 @@ const handleDatePress = (day) => {
 
 return (
     <View style={styles.container}>
-      <Text style={styles.user}>Bienvenue {user.username}</Text>
+      <Text style={styles.user}>Welcome {user.username}</Text>
       <View style={styles.inputContainer}>
-        <Text style={styles.tag}>Rentre tes données ici</Text>
+        <Text style={styles.tag}>Add your flight information</Text>
         {/* <DatePicker date={date} onDateChange={setDate} /> */}
         <TextInput
-          placeholder="Flynumber"
+          placeholder="Flight Number"
           autoCapitalize="none"
           onChangeText={(value) => setFlyNumber(value)}
           value={flyNumber}
@@ -78,7 +78,7 @@ return (
         />
 
         <TextInput
-          placeholder="AAAA-MM-JJ"
+          placeholder="YYYY-MM-DD"
           autoCapitalize="none"
           onChangeText={(value) => setDateInputed(value)}
           value={dateInputed}
@@ -98,9 +98,11 @@ return (
 const styles = StyleSheet.create({
   user:{
     fontSize: 40,
+    fontWeight: 500,
   },
   tag: {
-    fontSize: 20,
+    fontSize: 17,
+    fontWeight: 300,
     marginBottom: 30,
     textAlign: 'center',
   },
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
     paddingVertical: 5,
-    color: 'red',
+    color: '#000000',
   },
   button: {
     alignItems: 'center',

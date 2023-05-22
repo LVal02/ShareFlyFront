@@ -66,13 +66,9 @@ export default function SignUpScreen() {
   };
 
   return (
-    <ImageBackground
-      source={require("../assets/flight1.jpg")}
-      style={styles.background}
-    >
+      <View style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
       >
         <View style={styles.container}>
           <Text style={styles.title}>Create your account</Text>
@@ -87,7 +83,7 @@ export default function SignUpScreen() {
             style={styles.input}
           />
           <TextInput
-            placeholder="Mot de passe"
+            placeholder="Password"
             autoCapitalize="none"
             secureTextEntry={true}
             onChangeText={(value) => setPassword(value)}
@@ -102,14 +98,14 @@ export default function SignUpScreen() {
             style={styles.input}
           />
           <TextInput
-            placeholder="Firstname"
+            placeholder="First Name"
             autoCapitalize="words"
             onChangeText={(value) => setFirstName(value)}
             value={firstname}
             style={styles.input}
           />
           <TextInput
-            placeholder="Lastname"
+            placeholder="Last Name"
             autoCapitalize="words"
             onChangeText={(value) => setLastName(value)}
             value={lastname}
@@ -128,7 +124,7 @@ export default function SignUpScreen() {
           {/* Affichage du message d'erreur s'il y en a un */}
         </View>
       </KeyboardAvoidingView>
-    </ImageBackground>
+      </View>
   );
 }
 
@@ -140,11 +136,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 50,
     marginBottom: 100,
+    fontWeight: 600,
+    textAlign: "center", 
   },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    width: '100%',
+    height: '100%',
   },
   input: {
     width: 200,
@@ -154,16 +154,21 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingVertical: 5,
     fontSize: 20,
-    color: "white",
+    color: "#000000",
   },
   button: {
     alignItems: "center",
-    padding: 8,
+    padding: 4,
     width: 200,
     marginTop: 30,
-    backgroundColor: '#4941B7',
-    opacity: 0.7,
-    borderRadius: 10,
+    backgroundColor: "#4E3BBE",
+    opacity: 0.9,
+    borderRadius: 5,
+    elevation: 5,
+    shadowColor: '#000000',
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
   },
   textButton: {
     height: 30,
@@ -171,5 +176,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingTop: 5,
     alignItems: "center",
+    color: "rgb(237,237,237)",
   },
 });
