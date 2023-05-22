@@ -64,7 +64,6 @@ const handleDatePress = (day) => {
 };
 
 return (
-  <ImageBackground source={require('../assets/flight1.jpg')} style={styles.background}>
     <View style={styles.container}>
       <Text style={styles.user}>Bienvenue {user.username}</Text>
       <View style={styles.inputContainer}>
@@ -94,7 +93,6 @@ return (
         <Calendar onDayPress={handleDatePress} />
       </View>
     </View>
-  </ImageBackground>
 );
 }
 const styles = StyleSheet.create({
@@ -105,10 +103,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 30,
     textAlign: 'center',
-  },
-  background: {
-    width: '100%',
-    height: '100%',
   },
   container: {
     flex: 1,
@@ -131,19 +125,25 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    paddingTop: 8,
     width: '100%',
     marginTop: 30,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    opacity: 0.7,
+    padding: 4,
+    backgroundColor: "#4E3BBE",
+    opacity: 0.9,
+    borderRadius: 5,
+    elevation: 5,
+    shadowColor: '#000000',
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
   },
   textButton: {
     height: 30,
-    fontWeight: '600',
+    fontWeight: "600",
     fontSize: 16,
     paddingTop: 5,
-    alignItems: 'center',
+    alignItems: "center",
+    color: "rgb(237,237,237)",
   },
   error: {
     marginTop: 10,
