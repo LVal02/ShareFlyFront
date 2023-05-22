@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
-import { Switch } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // import { Alert } from 'react-native';
 
