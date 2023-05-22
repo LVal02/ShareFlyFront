@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  SafeAreaView,
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // import { colors } from 'debug/src/browser';
 
+import { buildUnavailableHoursBlocks } from 'react-native-calendars/src/timeline/Packer';
 
 
 
@@ -79,18 +81,19 @@ export default function StartScreen() {
 
 
   return (
-    <ImageBackground source={require('../assets/flight1.jpg')} style={styles.background}>
+    <ImageBackground source={require('../assets/flight3.jpg')} style={styles.background}>
           <TouchableOpacity onPress={() => autoLogin()} style={styles.button} activeOpacity={0.8}>
             <Text style={styles.textButton}>AutoLogin noFetch Token+username</Text>
           </TouchableOpacity>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
         <Text style={styles.title}> 
-        <FontAwesome name="plane" size={50} color="black" /> Welcome to ShareFly
+        <FontAwesome name="plane" size={50} color="#112f5b" />Welcome to ShareFly
       </Text>
         
         <View style={styles.inputContainer}>
           <TextInput
                 placeholder="Email"
+                placeholderTextColor="#8f9094"
                 autoCapitalize="none"
                 keyboardType="email-address"
                 textContentType="emailAddress"
@@ -100,7 +103,8 @@ export default function StartScreen() {
                 style={styles.input}
             />
           <TextInput
-                placeholder="Mot de passe"
+                placeholder="Password"
+                placeholderTextColor="#8f9094"
                 autoCapitalize="none"
                 secureTextEntry={!showPassword}
                 onChangeText={(value) => setPassword(value)}
@@ -111,13 +115,13 @@ export default function StartScreen() {
             <FontAwesome name={showPassword ? 'eye-slash' : 'eye'} size={24} color="black"/>
           </TouchableOpacity>
               {errorMessage && <Text style={styles.error}>Invalid email address</Text>}
-          <TouchableOpacity onPress={() => handleSubmit()} style={styles.button} activeOpacity={0.8}>
-            <Text style={styles.textButton}>Login</Text>
+          <TouchableOpacity onPress={() => handleSubmit()} style={styles.logInbutton} activeOpacity={0.8}>
+            <Text style={styles.logIntextButton}>Log In</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')
             } style={styles.button} activeOpacity={0.8} >
-        <Text style={styles.textButton}>Inscription</Text>
+        <Text style={styles.textButton}>Sign Up</Text>
           </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate('Snap')
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: '600',
     marginBottom: 20,
-    color: 'black',
+    color: '#EDEDED',
     alignItems: 'center',
     textAlign: 'center',
   },
@@ -172,14 +176,31 @@ const styles = StyleSheet.create({
     top: 85,
     right: 20,
   },
+  logInbutton: {
+    alignItems: 'center',
+    padding: 4,
+    width: '100%',
+    marginTop: 30,
+    backgroundColor: '#112f5b',
+    opacity: 0.9,
+    borderRadius: 10,
+  },
   button: {
     alignItems: 'center',
-    paddingTop: 8,
-    width: '100%',
+    padding: 5,
+    width: '90%',
     marginTop: 30,
     backgroundColor: 'white',
     opacity: 0.7,
     borderRadius: 10,
+  },
+  logIntextButton: {
+    height: 30,
+    fontWeight: '600',
+    fontSize: 16,
+    paddingTop: 5,
+    alignItems: 'center',
+    color: 'rgb(237,237,237)',
   },
   textButton: {
     height: 30,
@@ -187,6 +208,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingTop: 5,
     alignItems: 'center',
+    color: '#112f5b',
   },
   error: {
     marginTop: 10,
