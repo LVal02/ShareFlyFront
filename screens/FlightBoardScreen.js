@@ -151,6 +151,7 @@ export default function FlightBoardScreen() {
 
   let kilosAnnonce;
   kilosAnnonce = dataKilo?.map(annonce => {
+    // console.log("dataKilo annonce:", annonce);
     // const isExpanded = expandedFlights.includes(annonce._id);
     // const contentHeight = useRef(new Animated.Value(0)).current;
     // const contentMaxHeight = useRef(50).current;
@@ -178,8 +179,8 @@ export default function FlightBoardScreen() {
         // onPress={handleToggle}
         key={annonce._id}
       >
-        <Text>Fly Number: {annonce.flyNumber}</Text>
-        <Text>Date: {annonce.date}</Text>
+        <Text>Fly Number: {annonce.flight}</Text>
+        <Text>Date: {user.date}</Text>
           <View style={[styles.dropdownContent]}>
             <View>
               <Text>Additional Content</Text>
@@ -237,7 +238,7 @@ export default function FlightBoardScreen() {
       <Text style={styles.result}>{result}</Text>
 
       {kilosAnnonce}
-      {annonceKilo? annonceKilo : <Text>{errorMessage}</Text> }
+      {annonceKilo && (<Text>{errorMessage}</Text>) }
       
     </View>
   );

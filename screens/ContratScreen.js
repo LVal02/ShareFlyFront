@@ -14,6 +14,7 @@ export default function ContratScreen({ route }) {
 
   console.log('Contrat user:', userName);
 
+//Déstructuration des éléments reçus par le flightBoard
   const { flightId, kilo, user, date } = route.params;
   console.log('Contrat route:', route);
 
@@ -29,7 +30,7 @@ export default function ContratScreen({ route }) {
   const handleCheckbox1Change = () => {
     setIsCheckbox1Checked(!isCheckbox1Checked);
   };
-
+  
   const handleCheckbox2Change = () => {
     setIsCheckbox2Checked(!isCheckbox2Checked);
   };
@@ -48,6 +49,8 @@ export default function ContratScreen({ route }) {
 
       console.log('Veuillez cocher toutes les cases avant de procéder au paiement.');
       setErrorMessage('Veuillez cocher toutes les cases avant de procéder au paiement.');
+
+    //   Fait apparaitre une popUp dans l'écran
     //   Alert.alert('Erreur', 'Veuillez cocher toutes les cases avant de procéder au paiement.');
     }
   };
@@ -55,10 +58,9 @@ export default function ContratScreen({ route }) {
   return (
     <View style={styles.container}>
       <Text>Flight ID: {flightId}</Text>
-      <Text>J'accepte les conditions de vol</Text>
       <Text>
-        Je soussigné, {userName}, déclare avoir pris connaissance des différents documents à
-        transmettre et des conditions d'adhésion au FIP, et y souscrire pleinement".
+        Je soussigné, <Text style={{ fontWeight: 'bold' }}>{userName}</Text>, déclare avoir pris connaissance du 
+        contrat avec le prestataire <Text style={{ fontWeight: 'bold' }}>{user}</Text>
       </Text>
       <TouchableOpacity onPress={handleCheckbox1Change}>
         <View
@@ -77,9 +79,8 @@ export default function ContratScreen({ route }) {
         </View>
       </TouchableOpacity>
 
-      <Text>J'accepte les conditions</Text>
-
-      <Text>Pour le vol du {date}</Text>
+      <Text>Je garantie que je serai présent</Text>
+      <Text>pour le vol du <Text style={{ fontWeight: 'bold' }}>{date}</Text></Text>
       <TouchableOpacity onPress={handleCheckbox2Change}>
         <View
             style={{
