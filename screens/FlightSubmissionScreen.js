@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Calendar } from 'react-native-calendars';
 import { useNavigation } from '@react-navigation/native';
-import { updateDate, updateFlyNumber } from '../reducers/user';
+import { updateDate, updateFlightObjectId, updateFlyNumber } from '../reducers/user';
 
 
 // import DateInline from './TestDate';
@@ -12,6 +12,7 @@ import { updateDate, updateFlyNumber } from '../reducers/user';
 export default function FlightSubmissionScreen() {
   // const [date, setDate] = useState(new Date())
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
   
   const navigation = useNavigation();
 
@@ -22,18 +23,18 @@ export default function FlightSubmissionScreen() {
   const [error, setError] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const user = useSelector(state => state.user)
 console.log('flightSubmissionScreen user:',user);
 
 //Ici l'utilisateur mettra son n° et la date du vol
 const handleSubmitFlight = () => {
-  fetch("https://share-fly-backend.vercel.app/flights", {
+  fetch("https://share-fly-backend.vercel.app/flights/create", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       flyNumber: flyNumber,
       token: user.token,
       date: dateInputed,
+      username: user.username,
     }),
   })
     .then((response) => response.json())
@@ -43,6 +44,7 @@ const handleSubmitFlight = () => {
         console.log(data);
         dispatch(updateFlyNumber(flyNumber))
         dispatch(updateDate(dateInputed))
+        dispatch(updateFlightObjectId(data.objectId))
         navigation.navigate('FlightBoard')
         // navigation.navigate('TabNavigator', { screen: 'Home' });
       } else {

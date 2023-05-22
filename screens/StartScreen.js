@@ -12,11 +12,11 @@ import {
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUsername, addToken, updateDate, updateFlyNumber } from '../reducers/user';
+import { updateUsername, addToken, updateDate, updateFlyNumber, updateFlightObjectId } from '../reducers/user';
 
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { colors } from 'debug/src/browser';
+// import { colors } from 'debug/src/browser';
 
 import { buildUnavailableHoursBlocks } from 'react-native-calendars/src/timeline/Packer';
 
@@ -67,15 +67,16 @@ export default function StartScreen() {
       setErrorMessage(true);
     }
   };
+  
 // C'est le boutton qui auto "login" Je l'ai mis en place pour gagner du temps
   const autoLogin = () => {
     dispatch(addToken("IjY0bA1PT-shvwqTZRKculkRbP3atUU-"))
     dispatch(updateUsername("Dev"))
     dispatch(updateDate("2023-05-01"))
     dispatch(updateFlyNumber("OZ110"))
+    dispatch(updateFlightObjectId("646799ec255394f2222b4d41"))
     navigation.navigate('TabNavigator', { screen: 'Home' });
   }
-
 
 
   return (

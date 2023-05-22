@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+//La valeur est directement stocké dans state.user 
 const initialState = {
   username: null,
   token: null,
   flyNumber: null,
   date: null,
   photos: [],
-  firstname: null, 
-  lastname: null,
+  flightObjectId: null,
+  lastname:null,
+  firstname:null,
 };
 
 const userSlice = createSlice({
@@ -23,6 +24,9 @@ const userSlice = createSlice({
     updateFlyNumber: (state, action) => {
         state.flyNumber = action.payload;
     },
+    updateFlightObjectId: (state, action) => {
+      state.flightObjectId = action.payload;
+  },
     updateDate: (state, action) => {
         state.date = action.payload;
     },
@@ -41,5 +45,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { updateUsername, addToken,updateFlyNumber,updateDate, addPhoto, removePhoto, updateLastname, updateFirstname } = userSlice.actions;
+export const { updateUsername, addToken,updateFlyNumber,updateDate, addPhoto,updateFlightObjectId, removePhoto, updateLastname, updateFirstname } = userSlice.actions;
 export default userSlice.reducer;
