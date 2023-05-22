@@ -3,8 +3,6 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity, Animated, Modal } 
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
-// import { useLatest } from "react-use";
-
 
 export default function FlightBoardScreen() {
   const navigation = useNavigation();
@@ -25,9 +23,7 @@ export default function FlightBoardScreen() {
       kilo: '50',
       user: 'Max',
       __v: 3
-    },
-    {"__v": 0, "_id": "64676e62635c12ad86bc8b09", "flight": null, "kilo": 16, "user": {"__v": 0, "_id": "646359b6d21dce2b985f5322", "email": "test2@hotmail.com", "firstname": "testFirst2", "lastname": "testLast2", "password": "$2b$10$X2oFyqAg4TxO4M36T39O7efgGd5suUY4PRY.1v8RPy1jdOZZhIWqy", "token": "XJAac1KlpEw24QGU89AuOSpxSM0Dmosk", "username": "test2"}}, 
-    {"__v": 0, "_id": "64676e840d7eb43143c320d4", "flight": null, "kilo": 17, "user": {"__v": 0, "_id": "646359b6d21dce2b985f5322", "email": "test2@hotmail.com", "firstname": "testFirst2", "lastname": "testLast2", "password": "$2b$10$X2oFyqAg4TxO4M36T39O7efgGd5suUY4PRY.1v8RPy1jdOZZhIWqy", "token": "XJAac1KlpEw24QGU89AuOSpxSM0Dmosk", "username": "test2"}}
+    }
   ];
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -36,7 +32,6 @@ export default function FlightBoardScreen() {
   const [result, setResult] = useState('');
 
   const [annonceKilo, setAnnonceKilo] = useState(null);
-  // const latestAnnonceKilo = useLatest(annonceKilo)
   
   useEffect(() => {
     const resquestBodyFetchkilo = {
@@ -46,7 +41,7 @@ export default function FlightBoardScreen() {
       username: user.username,
     }
     console.log("resquestBodyFetchkilo",resquestBodyFetchkilo);
-    fetch('https://share-fly-backend.vercel.app/kilos/all', {
+    fetch('http://192.168.10.172:3000/kilos/find', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(resquestBodyFetchkilo),
@@ -56,7 +51,6 @@ export default function FlightBoardScreen() {
         if (data) {
           console.log('data', data);
           setAnnonceKilo(data);
-          dataKilo.push(data)
         } else {
           setErrorMessage('No Annonce found');
           console.log(data.error);
@@ -67,15 +61,13 @@ export default function FlightBoardScreen() {
   const handleAddKilo = () => {
     const requestBody = {
       token: user.token,
-      username: user.username,
       flyNumber: user.flyNumber,
       date: user.date,
       kilo: kilo,
-      objectId: user.flightObjectId,
     };
     console.log('requestBody:', requestBody);
 
-    fetch('https://share-fly-backend.vercel.app/kilos/', {
+    fetch('https://share-fly-backend.vercel.app/kilos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBody),
@@ -91,48 +83,104 @@ export default function FlightBoardScreen() {
       });
   };
 
-  const [expandedFlights, setExpandedFlights] = useState([]);
-  const handleFlightPress = flightId => {
-    if (expandedFlights.includes(flightId)) {
-      setExpandedFlights(expandedFlights.filter(id => id !== flightId));
-    } else {
-      setExpandedFlights([...expandedFlights, flightId]);
-    }
-  };
+  // const [expandedFlights, setExpandedFlights] = useState([]);
+  // const handleFlightPress = flightId => {
+  //   if (expandedFlights.includes(flightId)) {
+  //     setExpandedFlights(expandedFlights.filter(id => id !== flightId));
+  //   } else {
+  //     setExpandedFlights([...expandedFlights, flightId]);
+  //   }
+  // };
+
+  // const renderAnnonceItem = annonce => {
+  //   const isExpanded = expandedFlights.includes(annonce._id);
+  //   const contentHeight = useRef(new Animated.Value(0)).current;
+  //   const contentMaxHeight = useRef(50).current;
+
+  //   const handleToggle = () => {
+  //     if (!isExpanded) {
+  //       Animated.timing(contentHeight, {
+  //         toValue: contentMaxHeight,
+  //         duration: 300,
+  //         useNativeDriver: false,
+  //       }).start();
+  //     } else {
+  //       Animated.timing(contentHeight, {
+  //         toValue: 0,
+  //         duration: 500,
+  //         useNativeDriver: false,
+  //       }).start();
+  //     }
+  //     handleFlightPress(annonce._id);
+  //   };
+
+  //   return (
+  //     <TouchableOpacity
+  //       style={styles.flightItem}
+  //       onPress={handleToggle}
+  //       key={annonce._id}
+  //     >
+  //       <Text>Fly Number: {annonce.flyNumber}</Text>
+  //       <Text>Date: {annonce.date}</Text>
+  //       {isExpanded && (
+  //         <Animated.View style={[styles.dropdownContent, { height: contentHeight }]}>
+  //           <View>
+  //             <Text>Additional Content</Text>
+  //             <Text>Additional Content</Text>
+  //             <Text>Additional Content</Text>
+  //           </View>
+  //           <TouchableOpacity
+  //             style={styles.buttonBuy}
+  //             onPress={() =>
+  //               navigation.navigate('Buy', {
+  //                 flightId: annonce._id,
+  //                 date: user.date,
+  //                 kilo: annonce.kilo,
+  //                 user: annonce.user,
+  //               })
+  //             }
+  //             activeOpacity={0.8}
+  //           >
+  //             <Text>Buy</Text>
+  //           </TouchableOpacity>
+  //         </Animated.View>
+  //       )}
+  //     </TouchableOpacity>
+  //   );
+  // };
 
   let kilosAnnonce;
-  kilosAnnonce = dataKilo.map(annonce => {
-    const isExpanded = expandedFlights.includes(annonce._id);
-    const contentHeight = useRef(new Animated.Value(0)).current;
-    const contentMaxHeight = useRef(50).current;
+  kilosAnnonce = dataKilo?.map(annonce => {
+    // const isExpanded = expandedFlights.includes(annonce._id);
+    // const contentHeight = useRef(new Animated.Value(0)).current;
+    // const contentMaxHeight = useRef(50).current;
 
-    const handleToggle = () => {
-      if (!isExpanded) {
-        Animated.timing(contentHeight, {
-          toValue: contentMaxHeight,
-          duration: 300,
-          useNativeDriver: false,
-        }).start();
-      } else {
-        Animated.timing(contentHeight, {
-          toValue: 0,
-          duration: 500,
-          useNativeDriver: false,
-        }).start();
-      }
-      handleFlightPress(annonce._id);
-    };
+    // const handleToggle = () => {
+    //   if (!isExpanded) {
+    //     Animated.timing(contentHeight, {
+    //       toValue: contentMaxHeight,
+    //       duration: 300,
+    //       useNativeDriver: false,
+    //     }).start();
+    //   } else {
+    //     Animated.timing(contentHeight, {
+    //       toValue: 0,
+    //       duration: 500,
+    //       useNativeDriver: false,
+    //     }).start();
+    //   }
+    //   handleFlightPress(annonce._id);
+    // };
 
     return (
       <TouchableOpacity
         style={styles.flightItem}
-        onPress={handleToggle}
+        // onPress={handleToggle}
         key={annonce._id}
       >
         <Text>Fly Number: {annonce.flyNumber}</Text>
         <Text>Date: {annonce.date}</Text>
-        {isExpanded && (
-          <Animated.View style={[styles.dropdownContent, { height: contentHeight }]}>
+          <View style={[styles.dropdownContent]}>
             <View>
               <Text>Additional Content</Text>
               <Text>Additional Content</Text>
@@ -141,7 +189,7 @@ export default function FlightBoardScreen() {
             <TouchableOpacity
               style={styles.buttonBuy}
               onPress={() =>
-                navigation.navigate('Buy', {
+                navigation.navigate('Contrat', {
                   flightId: annonce._id,
                   date: user.date,
                   kilo: annonce.kilo,
@@ -152,8 +200,7 @@ export default function FlightBoardScreen() {
             >
               <Text>Buy</Text>
             </TouchableOpacity>
-          </Animated.View>
-        )}
+          </View>
       </TouchableOpacity>
     );
   });
@@ -190,10 +237,8 @@ export default function FlightBoardScreen() {
       <Text style={styles.result}>{result}</Text>
 
       {kilosAnnonce}
-      <Text>{errorMessage}</Text>
-      <TouchableOpacity onPress={() => setErrorMessage('Check')} style={styles.button} activeOpacity={0.8}>
-        <Text style={styles.textButton}>Fetch</Text>
-      </TouchableOpacity>
+      {annonceKilo? annonceKilo : <Text>{errorMessage}</Text> }
+      
     </View>
   );
 }

@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
+
 export default function BuyScreen({ route }) {
   const navigation = useNavigation();
   
@@ -27,7 +28,7 @@ export default function BuyScreen({ route }) {
       <Text>Payer les {kilo} Kg</Text>
       <Text>Pour le {date}</Text>
 
-      <TouchableOpacity onPress={() => navigation.navigate('FlightBoard')
+      <TouchableOpacity onPress={() =>navigation.navigate("TabNavigator", { screen: "Home" })
             } style={styles.button} activeOpacity={0.8} >
           <Text style={styles.textButton}>Oui je paye</Text>
         </TouchableOpacity>

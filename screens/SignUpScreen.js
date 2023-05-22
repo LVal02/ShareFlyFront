@@ -47,7 +47,7 @@ export default function SignUpScreen() {
           dispatch(updateFirstname(firstname)); // Mettre à jour le firstname dans le reducer
           dispatch(updateLastname(lastname)); // Mettre à jour le lastname dans le reducer
     
-          navigation.navigate("TabNavigator", { screen: "Submission" });
+          navigation.navigate("TabNavigator", { screen: "FlightBoard" });
         } else {
           setError(data.form);
           console.log(error);

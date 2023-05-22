@@ -14,6 +14,7 @@ import UserProfilScreen from "./screens/UserProfilScreen";
 import ChatScreen from "./screens/ChatScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import SnapScreen from "./screens/SnapScreen";
+import ContratScreen from "./screens/ContratScreen";
 
 // ______Screens
 //Components 
@@ -72,6 +73,7 @@ export default function App() {
           <Stack.Screen name="Snap" component={SnapScreen} options={{ header: (props) => <SnapHeader {...props} /> }}/>
           <Stack.Screen name="FlightBoard" component={FlightBoardScreen} />
           <Stack.Screen name="Buy" component={BuyScreen} />
+          <Stack.Screen name="Contrat" component={ContratScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
