@@ -95,7 +95,7 @@ export default function StartScreen() {
   };
 
   return (
-    <View style={styles.background}>
+    <View style={styles.container}>
       <TouchableOpacity
         onPress={() => autoLogin()}
         style={styles.button}
@@ -104,15 +104,17 @@ export default function StartScreen() {
         <Text style={styles.textButton}>AutoLogin noFetch Token+username</Text>
       </TouchableOpacity>
       {isTextVisible == true && (
+        <View style = {styles.titre}>
+        <FontAwesome name="plane" size={50} color="#112f5b" style={styles.logo}/>
         <Text style={styles.title}>
-          <FontAwesome name="plane" size={50} color="#112f5b" style={styles.logo}/>
           Welcome to ShareFly
         </Text>
+        </View>
       )}
-        <KeyboardAvoidingView
+        {/* <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
+        
+      > */}
         <View style={styles.inputContainer}>
           <TextInput
             placeholder="Email"
@@ -122,8 +124,8 @@ export default function StartScreen() {
             textContentType="emailAddress"
             autoCompleteType="email"
             onChangeText={(value) => setEmail(value)}
-            onTouchStart={() => disapear()}
-            onBlur={() => disapear()}
+            // onTouchStart={() => disapear()}
+            // onBlur={() => disapear()}
             
             value={email}
             style={styles.input}
@@ -136,8 +138,8 @@ export default function StartScreen() {
             onChangeText={(value) => setPassword(value)}
             value={password}
             style={styles.input}
-            onTouchStart={() => disapear()}
-            onBlur={() => disapear()}
+            // onTouchStart={() => disapear()}
+            // onBlur={() => disapear()}
           />
           <TouchableOpacity
             onPress={handleTogglePasswordVisibility}
@@ -160,7 +162,7 @@ export default function StartScreen() {
             <Text style={styles.logIntextButton}>Log In</Text>
           </TouchableOpacity>
         </View>
-        </KeyboardAvoidingView>
+        {/* </KeyboardAvoidingView> */}
         <TouchableOpacity
           onPress={() => navigation.navigate("SignUp")}
           style={styles.button}
@@ -191,14 +193,17 @@ export default function StartScreen() {
 }
 
 const styles = StyleSheet.create({
-  background: {
-    width: "100%",
-    height: "100%",
-  },
   container: {
     flex: 1,
+    width: '100%',
+    height: '100%',
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 60,
+  },
+  logo: {
+  // backgroundColor: 'red',
+  paddingRight: 2,
   },
   title: {
     fontSize: 50,
@@ -206,12 +211,17 @@ const styles = StyleSheet.create({
     color: "#000000",
     alignItems: "center",
     textAlign: "center", 
-    marginTop: 100   
+  marginBottom: 40,   
+  },
+  titre: {
+    flexDirection: "row",
+    marginRight: 30
   },
   inputContainer: {
-    width: "85%",
     padding: 30,
     borderRadius: 10,
+    width: 350
+
   },
   input: {
     width: "100%",
