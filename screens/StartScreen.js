@@ -12,10 +12,12 @@ import {
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUsername, addToken } from '../reducers/user';
+import { updateUsername, addToken, updateDate, updateFlyNumber } from '../reducers/user';
 
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { colors } from 'debug/src/browser';
+
 import { buildUnavailableHoursBlocks } from 'react-native-calendars/src/timeline/Packer';
 
 
@@ -65,23 +67,27 @@ export default function StartScreen() {
       setErrorMessage(true);
     }
   };
-
+// C'est le boutton qui auto "login" Je l'ai mis en place pour gagner du temps
   const autoLogin = () => {
     dispatch(addToken("IjY0bA1PT-shvwqTZRKculkRbP3atUU-"))
     dispatch(updateUsername("Dev"))
+    dispatch(updateDate("2023-05-01"))
+    dispatch(updateFlyNumber("OZ110"))
     navigation.navigate('TabNavigator', { screen: 'Home' });
   }
 
 
 
   return (
-    <ImageBackground source={require('../assets/flight.jpg')} style={styles.background}>
+    <ImageBackground source={require('../assets/flight1.jpg')} style={styles.background}>
           <TouchableOpacity onPress={() => autoLogin()} style={styles.button} activeOpacity={0.8}>
             <Text style={styles.textButton}>AutoLogin noFetch Token+username</Text>
           </TouchableOpacity>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
-        <Text style={styles.title}>Welcome to ShareFly</Text>
-
+        <Text style={styles.title}> 
+        <FontAwesome name="plane" size={50} color="black" /> Welcome to Welcome to ShareFly
+      </Text>
+        
         <View style={styles.inputContainer}>
           <TextInput
                 placeholder="Email"
@@ -139,48 +145,52 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 190, 11, 0.4)',
-  },
-  image: {
-    width: '100%',
-    height: '50%',
   },
   title: {
-    fontSize: 40,
+    fontSize: 50,
     fontWeight: '600',
     marginBottom: 20,
+    color: 'black',
+    alignItems: 'center',
+    textAlign: 'center',
   },
   inputContainer: {
     width: '85%',
-    backgroundColor: "#ffffff",
     padding: 30,
-    borderRadius: 1,
+    borderRadius: 10,
   },
   input: {
     width: '100%',
     borderBottomColor: '#000000',
     borderBottomWidth: 1,
-    fontSize: 16,
+    fontSize: 20,
+    marginBottom: 20,
+    paddingVertical: 5,
+  },
+  iconButton: {
+    position: 'absolute',
+    top: 85,
+    right: 20,
   },
   button: {
     alignItems: 'center',
     paddingTop: 8,
     width: '100%',
     marginTop: 30,
-    backgroundColor: '#fbe29c',
-    borderRadius: 1,
+    backgroundColor: 'white',
+    opacity: 0.7,
+    borderRadius: 10,
   },
   textButton: {
-    // fontFamily: 'Futura',
     height: 30,
     fontWeight: '600',
     fontSize: 16,
+    paddingTop: 5,
+    alignItems: 'center',
   },
   error: {
     marginTop: 10,
     color: 'red',
   },
-  text: {
-    // Styles pour le texte utilisateur
-  },
 });
+

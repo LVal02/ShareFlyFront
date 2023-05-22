@@ -1,57 +1,58 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-
 export default function HomeScreen() {
-    const navigation = useNavigation();
-  //Ici pour les toutes les annonces que l'utilisateur pourra mettre
+  const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-        <Text>Home</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('FlightSubmission')
-            } style={styles.button} activeOpacity={0.8} >
+    <ImageBackground source={require('../assets/flight1.jpg')} style={styles.background}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Home</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('FlightSubmission')} style={styles.button} activeOpacity={0.8}>
           <Text style={styles.textButton}>Je veux enregistrer mon N° de Vol</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('FlightBoard')
-            } style={styles.button} activeOpacity={0.8} >
-          <Text style={styles.textButton}>regarder vos annonces Déjà Poster</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('FlightBoard')} style={styles.button} activeOpacity={0.8}>
+          <Text style={styles.textButton}>Regarder les annonces de kilos selon votre N° de vol et date</Text>
         </TouchableOpacity>
-    </View>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    width: '100%',
+    height: '100%',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  inputContainer: {
-    width: '85%',
-    backgroundColor: "#ffffff",
-    padding: 30,
-    borderRadius: 1,
-  },
-  input: {
-    width: '100%',
-    borderBottomColor: '#000000',
-    borderBottomWidth: 1,
-    fontSize: 16,
+  title: {
+    fontSize: 70,
+    fontWeight: '600',
+    marginBottom: 200,
+    color: 'black',
+    textAlign: 'center',
   },
   button: {
     alignItems: 'center',
     paddingTop: 8,
-    width: '100%',
+    width: '80%',
     marginTop: 30,
-    backgroundColor: '#fbe29c',
-    borderRadius: 1,
+    backgroundColor: 'white',
+    opacity: 0.7,
+    borderRadius: 10,
   },
   textButton: {
-    // fontFamily: 'Futura',
-    height: 30,
+    height: 50,
     fontWeight: '600',
     fontSize: 16,
+    paddingTop: 5,
+    alignItems: 'center',
+  textAlign: 'center',
+  opacity: 1,
   },
 });

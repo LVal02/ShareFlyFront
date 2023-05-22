@@ -3,9 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   username: null,
   token: null,
-  flight: null,
+  flyNumber: null,
   date: null,
   photos: [],
+  firstname: null, 
+  lastname: null,
 };
 
 const userSlice = createSlice({
@@ -18,8 +20,8 @@ const userSlice = createSlice({
     addToken: (state, action) => {
       state.token = action.payload;
     },
-    updateFlight: (state, action) => {
-        state.Flight = action.payload;
+    updateFlyNumber: (state, action) => {
+        state.flyNumber = action.payload;
     },
     updateDate: (state, action) => {
         state.date = action.payload;
@@ -30,8 +32,14 @@ const userSlice = createSlice({
     removePhoto: (state, action) => {
       state.photos = state.photos.filter((data) => data !== action.payload);
     },
+    updateFirstname: (state, action) => {
+      state.firstname = action.payload;
+    },
+    updateLastname: (state, action) => {
+      state.lastname = action.payload;
+    },
   },
 });
 
-export const { updateUsername, addToken,updateFlight,updateDate, addPhoto, removePhoto } = userSlice.actions;
+export const { updateUsername, addToken,updateFlyNumber,updateDate, addPhoto, removePhoto, updateLastname, updateFirstname } = userSlice.actions;
 export default userSlice.reducer;

@@ -18,7 +18,7 @@ const SnapHeader = ({ navigation }) => {
         <Text style={styles.title}>Retour</Text>
       </TouchableOpacity>
     </View>
-  );
+  );  
 };
 
 const styles = {
