@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Animated, Modal } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Animated, Modal, SafeAreaView} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
@@ -211,6 +211,7 @@ export default function FlightBoardScreen() {
   };
 
   return (
+
     <View style={styles.container}>
       <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.square} activeOpacity={0.8}>
         <FontAwesome name="plus" size={24} color="black" />
@@ -241,6 +242,7 @@ export default function FlightBoardScreen() {
       {annonceKilo && (<Text>{errorMessage}</Text>) }
       
     </View>
+
   );
 }
 

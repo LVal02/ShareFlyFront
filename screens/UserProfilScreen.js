@@ -67,11 +67,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 1,
     borderColor: 'black',
-    padding: 10,
+    width: '90%',
     borderRadius: 20,
   },
   label: {
     fontWeight: 'bold',
+    marginLeft: 10,
     marginRight: 10,
     color: '#333',
   },
