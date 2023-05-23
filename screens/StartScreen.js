@@ -71,6 +71,9 @@ export default function StartScreen() {
           if (data.result) {
             dispatch(addToken(data.token));
             dispatch(updateUsername(data.username));
+            
+            dispatch(updateFirstname(firstname)); // Mettre à jour le firstname dans le reducer
+            dispatch(updateLastname(lastname)); 
             //On veut récupérer l'objectId de vol
             const objetRequest = { token: data.token, username: data.username }
             console.log("ça passe ici objetRequest:", objetRequest);
