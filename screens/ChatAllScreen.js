@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
 
 export default function ChatAllScreen() {
+    
+    //Un fetch de tout les message ici pls
 
-    navigation.navigate("TabNavigator", { screen: "FlightBoard" });
+    const handleChatNavigate = () => {
+        navigation.navigate("TabNavigator", { screen: "Chat", params:{
+            token: user.token,
+            usernameTwo: usernameTwo,
+            flyNumber: user.flyNumber,
+            date: user.date,
+            username: user.username,
+          }}
+          )
+    }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>All Chat</Text>
         <TouchableOpacity
-            onPress={handleSignUp}
+            onPress={handleChatNavigate(idChat)}
             style={styles.button}
             activeOpacity={0.8}/>
       </View>
