@@ -63,6 +63,7 @@ export default function StartScreen() {
 
   }
   const handleSubmit = () => {
+    //le signUp classique 
     if (EMAIL_REGEX.test(email)) {
       fetch("https://share-fly-backend.vercel.app/users/signin", {
         method: "POST",
@@ -74,9 +75,27 @@ export default function StartScreen() {
           if (data.result) {
             dispatch(addToken(data.token));
             dispatch(updateUsername(data.username));
-            navigation.navigate("TabNavigator", { screen: "Home" });
+            //On veut récupérer l'objectId de vol
+            const objetRequest = { token: data.token, username: data.username }
+            console.log("ça passe ici objetRequest:", objetRequest);
+            fetch("https://share-fly-backend.vercel.app/flights", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(objetRequest),
+            })
+            .then((response) => response.json())
+            .then((dataFlight) => {
+              console.log("ça passe aussi ici");
+              if (dataFlight) {
+                console.log(dataFlight.data);
+                // const [ _id, flyNumber, date ] = dataFlight.data[0]
+                // dispatch(updateFlightObjectId())
+               navigation.navigate("TabNavigator", { screen: "Home" });
+              }
+            })
           } else {
             setErrorMessage("Invalid email or password");
+            navigation.navigate("TabNavigator", { screen: "Home" });
           }
         });
     } else {
@@ -93,6 +112,14 @@ export default function StartScreen() {
     dispatch(updateFlightObjectId("646799ec255394f2222b4d41"));
     navigation.navigate("TabNavigator", { screen: "Home" });
   };
+  const autoLogin2 = () => {
+    dispatch(addToken("jJCTNkYXC5MxlG2LoStA8ycZQTUf9ypw"));
+    dispatch(updateUsername("Deivi"));
+    dispatch(updateDate("2023-05-01"));
+    dispatch(updateFlyNumber("OZ110"));
+    dispatch(updateFlightObjectId("646799ec255394f2222b4d41"));
+    navigation.navigate("TabNavigator", { screen: "Home" });
+  };
 
   return (
     <View style={styles.container}>
@@ -102,6 +129,13 @@ export default function StartScreen() {
         activeOpacity={0.8}
       >
         <Text style={styles.textButton}>AutoLogin noFetch Token+username</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => autoLogin()}
+        style={styles.button}
+        activeOpacity={0.8}
+      >
+        <Text style={styles.textButton}>AutoLogin2 noFetch Token+username</Text>
       </TouchableOpacity>
       {isTextVisible == true && (
         <View style = {styles.titre}>

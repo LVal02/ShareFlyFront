@@ -1,12 +1,14 @@
-import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
 
 export default function BuyScreen({ route }) {
   const navigation = useNavigation();
-  
+  const [cardNumber, setCardNumber] = useState()
+  const [cardholderName, setCardholderName] = useState()
+  const [secretCode, setsecretCode] = useState()
   console.log('buyScreen route:', route);
 
   const { flightId, kilo, user, date } = route.params;
@@ -20,19 +22,80 @@ export default function BuyScreen({ route }) {
     );
   }
 
-  // Utilisez l'identifiant du vol comme bon vous semble dans votre composant BuyScreen
+
+  // route post chats pour créer un lien entre le user 1 et 2
+  const handleBuyToCreateChat = () => {
+    const handleAddKilo = () => {
+      const requestBody = {
+        token: user.token,
+        flyNumber: user.flyNumber,
+        date: user.date,
+        kilo: kilo,
+      };
+      console.log('requestBody:', requestBody);
+  
+      fetch('https://share-fly-backend.vercel.app/chats/creat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+      })
+        .then(response => response.json())
+        .then(data => {
+            navigation.navigate("TabNavigator", { screen: "Home" })
+            setResult(data.result ? 'Kilo added successfully' : `Error: ${data.error}`);
+          console.log('Server Response:', data);
+        })
+        .catch(error => {
+          setResult(`Error: ${error}`);
+          console.log(error);
+        });
+    };
+  }
 
   return (
-    <View style={styles.container}>
+<View style={styles.container}>
+    <View style={styles.containerCard}>
+      
+    <Text>Order Summary</Text>
     <Text>Flight ID: {flightId}</Text>
       <Text>Payer les {kilo} Kg</Text>
       <Text>Pour le {date}</Text>
 
-      <TouchableOpacity onPress={() =>navigation.navigate("TabNavigator", { screen: "Home" })
-            } style={styles.button} activeOpacity={0.8} >
+      <Text>Payment details</Text>
+      <TextInput
+          placeholder="Cardholder Name"
+          autoCapitalize="none"
+          onChangeText={(value) => setCardNumber(value)}
+          value={cardNumber}
+          style={styles.input}
+      />
+      <View style={styles.alignInRow}>       
+        <View style={styles.itemBox}>
+          <TextInput
+              placeholder="CardNumber"
+              autoCapitalize="none"
+              onChangeText={(value) => setCardNumber(value)}
+              value={cardNumber}
+              style={styles.input}
+              />
+        </View>
+        <Text>Séparer</Text>
+      <View style={styles.itemBox}>
+          <TextInput
+          placeholder="Secret Code"
+          autoCapitalize="none"
+          onChangeText={(value) => setCardNumber(value)}
+          value={cardNumber}
+          style={styles.input}
+          />
+        </View>
+      </View>
+      <TouchableOpacity onPress={() => handleBuyToCreateChat()
+      } style={styles.button} activeOpacity={0.8} >
           <Text style={styles.textButton}>Oui je paye</Text>
-        </TouchableOpacity>
+      </TouchableOpacity>
     </View>
+</View>
   );
 }
 
@@ -42,6 +105,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  containerCard: {
+    width: "100%",
+    height: "50%",
+    backgroundColor: '#FAFAFBFF', // neutral-100
+    borderRadius: 4, // border-m
+    shadowColor: '#171a1f',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 1,
+  },
+  alignInRow : {
+    display: "flex",
+    flexDirection: "row",
   },
   button: {
     alignItems: 'center',

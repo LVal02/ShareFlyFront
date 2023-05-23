@@ -34,6 +34,7 @@ export default function FlightBoardScreen() {
   const [annonceKilo, setAnnonceKilo] = useState(null);
   
   useEffect(() => {
+
     const resquestBodyFetchkilo = {
       flyNumber: user.flyNumber,
       date: user.date,
@@ -41,7 +42,7 @@ export default function FlightBoardScreen() {
       username: user.username,
     }
     console.log("resquestBodyFetchkilo",resquestBodyFetchkilo);
-    fetch('http://192.168.10.172:3000/kilos/find', {
+    fetch('https://share-fly-backend.vercel.app/kilos/all', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(resquestBodyFetchkilo),
@@ -54,9 +55,11 @@ export default function FlightBoardScreen() {
         } else {
           setErrorMessage('No Annonce found');
           console.log(data.error);
-        }
+          setAnnonceKilo(dataKilo)
+        } cath
       });
   }, []);
+
 
   const handleAddKilo = () => {
     const requestBody = {
@@ -64,9 +67,12 @@ export default function FlightBoardScreen() {
       flyNumber: user.flyNumber,
       date: user.date,
       kilo: kilo,
+      username: user.username,
+      objectId: user.flightObjectId,
     };
     console.log('requestBody:', requestBody);
-
+    
+    // AJOUTER DES KILOS ICI
     fetch('https://share-fly-backend.vercel.app/kilos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -83,95 +89,8 @@ export default function FlightBoardScreen() {
       });
   };
 
-  // const [expandedFlights, setExpandedFlights] = useState([]);
-  // const handleFlightPress = flightId => {
-  //   if (expandedFlights.includes(flightId)) {
-  //     setExpandedFlights(expandedFlights.filter(id => id !== flightId));
-  //   } else {
-  //     setExpandedFlights([...expandedFlights, flightId]);
-  //   }
-  // };
-
-  // const renderAnnonceItem = annonce => {
-  //   const isExpanded = expandedFlights.includes(annonce._id);
-  //   const contentHeight = useRef(new Animated.Value(0)).current;
-  //   const contentMaxHeight = useRef(50).current;
-
-  //   const handleToggle = () => {
-  //     if (!isExpanded) {
-  //       Animated.timing(contentHeight, {
-  //         toValue: contentMaxHeight,
-  //         duration: 300,
-  //         useNativeDriver: false,
-  //       }).start();
-  //     } else {
-  //       Animated.timing(contentHeight, {
-  //         toValue: 0,
-  //         duration: 500,
-  //         useNativeDriver: false,
-  //       }).start();
-  //     }
-  //     handleFlightPress(annonce._id);
-  //   };
-
-  //   return (
-  //     <TouchableOpacity
-  //       style={styles.flightItem}
-  //       onPress={handleToggle}
-  //       key={annonce._id}
-  //     >
-  //       <Text>Fly Number: {annonce.flyNumber}</Text>
-  //       <Text>Date: {annonce.date}</Text>
-  //       {isExpanded && (
-  //         <Animated.View style={[styles.dropdownContent, { height: contentHeight }]}>
-  //           <View>
-  //             <Text>Additional Content</Text>
-  //             <Text>Additional Content</Text>
-  //             <Text>Additional Content</Text>
-  //           </View>
-  //           <TouchableOpacity
-  //             style={styles.buttonBuy}
-  //             onPress={() =>
-  //               navigation.navigate('Buy', {
-  //                 flightId: annonce._id,
-  //                 date: user.date,
-  //                 kilo: annonce.kilo,
-  //                 user: annonce.user,
-  //               })
-  //             }
-  //             activeOpacity={0.8}
-  //           >
-  //             <Text>Buy</Text>
-  //           </TouchableOpacity>
-  //         </Animated.View>
-  //       )}
-  //     </TouchableOpacity>
-  //   );
-  // };
-
   let kilosAnnonce;
   kilosAnnonce = dataKilo?.map(annonce => {
-    // console.log("dataKilo annonce:", annonce);
-    // const isExpanded = expandedFlights.includes(annonce._id);
-    // const contentHeight = useRef(new Animated.Value(0)).current;
-    // const contentMaxHeight = useRef(50).current;
-
-    // const handleToggle = () => {
-    //   if (!isExpanded) {
-    //     Animated.timing(contentHeight, {
-    //       toValue: contentMaxHeight,
-    //       duration: 300,
-    //       useNativeDriver: false,
-    //     }).start();
-    //   } else {
-    //     Animated.timing(contentHeight, {
-    //       toValue: 0,
-    //       duration: 500,
-    //       useNativeDriver: false,
-    //     }).start();
-    //   }
-    //   handleFlightPress(annonce._id);
-    // };
 
     return (
       <TouchableOpacity
@@ -239,7 +158,8 @@ export default function FlightBoardScreen() {
       <Text style={styles.result}>{result}</Text>
 
       {kilosAnnonce}
-      {annonceKilo && (<Text>{errorMessage}</Text>) }
+      
+      {/* {annonceKilo && (<Text>{errorMessage}</Text>) } */}
       
     </View>
 

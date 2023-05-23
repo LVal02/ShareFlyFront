@@ -40,7 +40,7 @@ const handleSubmitFlight = () => {
     .then((response) => response.json())
     .then((data) => {
       console.log("Data:", data);
-      if (data.result) {
+      if (data) {
         console.log(data);
         dispatch(updateFlyNumber(flyNumber))
         dispatch(updateDate(dateInputed))
