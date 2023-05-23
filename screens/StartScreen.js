@@ -81,7 +81,7 @@ export default function StartScreen() {
             })
             .then((response) => response.json())
             .then((dataFlight) => {
-              console.log("ça passe aussi ici");
+              console.log("ça passe aussi ici dataFlight", dataFlight);
               if (dataFlight) {
                 console.log(dataFlight);
                 // Je trouve pas de vol 

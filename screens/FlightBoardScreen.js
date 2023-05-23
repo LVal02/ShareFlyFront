@@ -57,7 +57,7 @@ export default function FlightBoardScreen() {
           setErrorMessage('No Annonce found');
           console.log(data.error);
           setAnnonceKilo(dataKilo)
-        } cath
+        } 
       })
       .catch(error => {
         setResult(`Error: ${error}`);
