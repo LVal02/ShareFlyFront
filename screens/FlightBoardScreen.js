@@ -56,7 +56,7 @@ export default function FlightBoardScreen() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data) {
+        if (data.result === true) {
           console.log("data", data);
           setAnnonceKilo(data);
         } else {
