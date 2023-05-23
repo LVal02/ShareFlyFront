@@ -50,8 +50,8 @@ export default function ContratScreen({ route }) {
       console.log('Veuillez cocher toutes les cases avant de procéder au paiement.');
       setErrorMessage('Veuillez cocher toutes les cases avant de procéder au paiement.');
 
-    //   Fait apparaitre une popUp dans l'écran
-    //   Alert.alert('Erreur', 'Veuillez cocher toutes les cases avant de procéder au paiement.');
+      //   Fait apparaitre une popUp dans l'écran
+      //   Alert.alert('Erreur', 'Veuillez cocher toutes les cases avant de procéder au paiement.');
     }
   };
 

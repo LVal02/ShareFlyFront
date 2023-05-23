@@ -58,6 +58,11 @@ export default function FlightBoardScreen() {
           console.log(data.error);
           setAnnonceKilo(dataKilo)
         } cath
+      })
+      .catch(error => {
+        setResult(`Error: ${error}`);
+        console.log(error);
+        setAnnonceKilo(dataKilo)
       });
   }, []);
 
@@ -91,7 +96,7 @@ export default function FlightBoardScreen() {
   };
 
   let kilosAnnonce;
-  kilosAnnonce = annonceKilo?.map(annonce => {
+  kilosAnnonce = dataKilo?.map(annonce => {
 
     return (
       <TouchableOpacity

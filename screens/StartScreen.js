@@ -57,10 +57,6 @@ export default function StartScreen() {
     setTextVisibility(isTextVisible * -1);
     console.log(isTextVisible) 
     console.log(isTextVisible == true) 
-    console.log(isTextVisible) 
-
-
-
   }
   const handleSubmit = () => {
     //le signUp classique 
@@ -87,9 +83,14 @@ export default function StartScreen() {
             .then((dataFlight) => {
               console.log("ça passe aussi ici");
               if (dataFlight) {
-                console.log(dataFlight.data);
-                // const [ _id, flyNumber, date ] = dataFlight.data[0]
-                // dispatch(updateFlightObjectId())
+                console.log(dataFlight);
+                // Je trouve pas de vol 
+
+                // const [ _id, flyNumber, date ] = dataFlight.data[0]  
+                // dispatch(updateFlightObjectId(_id))
+                // dispatch(updateFlyNumber(flyNumber))
+                // dispatch(updateDate(date))
+                
                navigation.navigate("TabNavigator", { screen: "Home" });
               }
             })

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 
 
@@ -9,8 +10,11 @@ export default function BuyScreen({ route }) {
   const [cardNumber, setCardNumber] = useState()
   const [cardholderName, setCardholderName] = useState()
   const [secretCode, setsecretCode] = useState()
-  console.log('buyScreen route:', route);
+  const [result, setResult] = useState('')
 
+ // Juste une précision sur qui est qui 
+  const userOne = useSelector(state => state.user)
+  console.log('buyScreen route:', route);
   const { flightId, kilo, user, date } = route.params;
 
   if (!flightId) {
@@ -25,12 +29,13 @@ export default function BuyScreen({ route }) {
 
   // route post chats pour créer un lien entre le user 1 et 2
   const handleBuyToCreateChat = () => {
-    const handleAddKilo = () => {
       const requestBody = {
-        token: user.token,
-        flyNumber: user.flyNumber,
-        date: user.date,
-        kilo: kilo,
+        token: userOne.token,
+        username: userOne.username,
+        date: userOne.date,
+        objectId: flightId,
+        //Le deuxième username 
+        usernameTwo: user,
       };
       console.log('requestBody:', requestBody);
   
@@ -41,15 +46,15 @@ export default function BuyScreen({ route }) {
       })
         .then(response => response.json())
         .then(data => {
-            navigation.navigate("TabNavigator", { screen: "Home" })
-            setResult(data.result ? 'Kilo added successfully' : `Error: ${data.error}`);
+
+          setResult(data.result ? 'Chat created successfully' : `Error: ${data.error}`);
           console.log('Server Response:', data);
+          
         })
         .catch(error => {
           setResult(`Error: ${error}`);
           console.log(error);
         });
-    };
   }
 
   return (
