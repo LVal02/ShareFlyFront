@@ -17,6 +17,7 @@
     "@react-navigation/native": "6",
     "@react-navigation/native-stack": "6",
     "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.4.0",
     "expo": "~48.0.15",
     "expo-app-auth": "~11.1.0",
     "expo-auth-session": "~4.0.3",
