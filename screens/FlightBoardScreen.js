@@ -96,7 +96,7 @@ export default function FlightBoardScreen() {
   };
 
   let kilosAnnonce;
-  kilosAnnonce = dataKilo?.map(annonce => {
+  kilosAnnonce = annonceKilo?.map(annonce => {
 
     return (
       <TouchableOpacity

@@ -40,15 +40,26 @@ const handleSubmitFlight = () => {
     .then((response) => response.json())
     .then((data) => {
       console.log("Data:", data);
-      if (data) {
+      if (data.result) {
         // console.log("data.rsult",data.result);
         dispatch(updateFlyNumber(flyNumber))
         dispatch(updateDate(dateInputed))
         dispatch(updateFlightObjectId(data.objectId))
-        navigation.navigate('FlightBoard')
+        // navigation.navigate('FlightBoard')
         // navigation.navigate('TabNavigator', { screen: 'Home' });
       } else {
         setError(data.error); // Update the error state with the specific error message
+        if(data.error == "Flight already exists"){
+          fetch("https://share-fly-backend.vercel.app/flights/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              objectId: data.objectId,
+              token: user.token,
+              username: user.username,
+            }),
+          })
+        }
         setErrorMessage("Invalid input or already added");
       }
     })

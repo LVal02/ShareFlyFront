@@ -15,6 +15,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateUsername,
+  updateFirstname,
+  updateLastname,
   addToken,
   updateDate,
   updateFlyNumber,
@@ -68,12 +70,13 @@ export default function StartScreen() {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log("dataFetchsignIn",data);
           if (data.result) {
             dispatch(addToken(data.token));
             dispatch(updateUsername(data.username));
             
-            dispatch(updateFirstname(firstname)); // Mettre à jour le firstname dans le reducer
-            dispatch(updateLastname(lastname)); 
+            dispatch(updateFirstname(data.firstname)); // Mettre à jour le firstname dans le reducer
+            dispatch(updateLastname(data.lastname)); 
             //On veut récupérer l'objectId de vol
             const objetRequest = { token: data.token, username: data.username }
             console.log("ça passe ici objetRequest:", objetRequest);
@@ -85,36 +88,35 @@ export default function StartScreen() {
             .then((response) => response.json())
             .then((dataFlight) => {
               console.log("ça passe aussi ici dataFlight", dataFlight);
-              if (dataFlight) {
+              if (dataFlight.result) {
                 console.log(dataFlight);
-                // Je trouve pas de vol 
 
                 const {_id, flyNumber, date} = dataFlight.data[0] 
                 console.log("_id, flyNumber, date",_id, flyNumber, date); 
                 dispatch(updateFlightObjectId(_id))
                 dispatch(updateFlyNumber(flyNumber))
                 dispatch(updateDate(date))
-
+                // A Trouvé un vol donc il navigue avec un n° de vol et son id
                navigation.navigate("TabNavigator", { screen: "Home" });
-              }
+              }else { navigation.navigate("TabNavigator", { screen: "Home" }) // N'a pas encore enregistrer de vol
+            }
             })
           } else {
             setErrorMessage("Invalid email or password");
-            navigation.navigate("TabNavigator", { screen: "Home" });
           }
         });
     } else {
-      setErrorMessage(true);
+      setErrorMessage("Please enter a valid email");
     }
   };
 
   // C'est le boutton qui auto "login" Je l'ai mis en place pour gagner du temps
   const autoLogin = () => {
     dispatch(addToken("IjY0bA1PT-shvwqTZRKculkRbP3atUU-"));
-    dispatch(updateUsername("Dev"));
-    dispatch(updateDate("2023-05-01"));
+    dispatch(updateUsername("Devxi"));
+    dispatch(updateDate("2023-05-01T00:00:00.000Z"));
     dispatch(updateFlyNumber("OZ110"));
-    dispatch(updateFlightObjectId("646799ec255394f2222b4d41"));
+    dispatch(updateFlightObjectId("3lLVDtDGdyye2nTbYzz9ZcTME8gR4bgB"));
     navigation.navigate("TabNavigator", { screen: "Home" });
   };
   const autoLogin2 = () => {
