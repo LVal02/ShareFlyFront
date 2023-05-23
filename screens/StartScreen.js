@@ -47,11 +47,11 @@ export default function StartScreen() {
     setShowPassword(!showPassword);
   };
 
-  useEffect(() => {
-    if (email) {
-      navigation.navigate("TabNavigator", { screen: "Submission" });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (email) {
+  //     navigation.navigate("TabNavigator", { screen: "Submission" });
+  //   }
+  // }, []);
 
   const disapear = () => {
     setTextVisibility(isTextVisible * -1);
@@ -86,11 +86,12 @@ export default function StartScreen() {
                 console.log(dataFlight);
                 // Je trouve pas de vol 
 
-                // const [ _id, flyNumber, date ] = dataFlight.data[0]  
-                // dispatch(updateFlightObjectId(_id))
-                // dispatch(updateFlyNumber(flyNumber))
-                // dispatch(updateDate(date))
-                
+                const {_id, flyNumber, date} = dataFlight.data[0] 
+                console.log("_id, flyNumber, date",_id, flyNumber, date); 
+                dispatch(updateFlightObjectId(_id))
+                dispatch(updateFlyNumber(flyNumber))
+                dispatch(updateDate(date))
+
                navigation.navigate("TabNavigator", { screen: "Home" });
               }
             })
@@ -138,14 +139,12 @@ export default function StartScreen() {
       >
         <Text style={styles.textButton}>AutoLogin2 noFetch Token+username</Text>
       </TouchableOpacity>
-      {isTextVisible == true && (
-        <View style = {styles.titre}>
-        <FontAwesome name="plane" size={50} color="#112f5b" style={styles.logo}/>
-        <Text style={styles.title}>
-          Welcome to ShareFly
-        </Text>
-        </View>
-      )}
+
+  <View style={styles.titre}>
+    <FontAwesome name="plane" size={50} color="#112f5b" style={styles.logo} />
+    <Text style={styles.title}>Welcome to ShareFly</Text>
+  </View>
+      
         {/* <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         
