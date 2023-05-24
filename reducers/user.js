@@ -3,10 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   username: null,
   token: null,
-  flyNumber: null,
-  date: null,
   photos: [],
-  flightObjectId: null,
+  flights: [{
+    flightObjectId: null,
+    flyNumber: null,
+    date: null,
+  }],
   lastname:null,
   firstname:null,
 };
@@ -21,15 +23,24 @@ const userSlice = createSlice({
     addToken: (state, action) => {
       state.token = action.payload;
     },
-    updateFlyNumber: (state, action) => {
-        state.flyNumber = action.payload;
+    updateFlights: (state, action) => {
+      action.payload.data.forEach((flight, index) => {
+        state.flights[index] = {
+          flightObjectId: flight._id,
+          flyNumber: flight.flyNumber,
+          date: flight.date,
+        };
+      });
     },
-    updateFlightObjectId: (state, action) => {
-      state.flightObjectId = action.payload;
-  },
-    updateDate: (state, action) => {
-        state.date = action.payload;
-    },
+    //   updateFlightObjectId: (state, action) => {
+    //     state.flightObjectId.push(action.payload);
+    // },
+    // updateFlyNumber: (state, action) => {
+    //     state.flyNumber = action.payload;
+    // },
+    // updateDate: (state, action) => {
+    //     state.date = action.payload;
+    // },
     addPhoto: (state, action) => {
       state.photos.push(action.payload);
     },
@@ -45,5 +56,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { updateUsername, addToken,updateFlyNumber,updateDate, addPhoto,updateFlightObjectId, removePhoto, updateLastname, updateFirstname } = userSlice.actions;
+export const { updateUsername, addToken, addPhoto, removePhoto, updateLastname, updateFirstname,updateFlights } = userSlice.actions;
 export default userSlice.reducer;

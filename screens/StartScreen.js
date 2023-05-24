@@ -18,9 +18,7 @@ import {
   updateFirstname,
   updateLastname,
   addToken,
-  updateDate,
-  updateFlyNumber,
-  updateFlightObjectId,
+  updateFlights,
 } from "../reducers/user";
 
 import { useNavigation } from "@react-navigation/native";
@@ -73,7 +71,6 @@ export default function StartScreen() {
           if (data.result) {
             dispatch(addToken(data.token));
             dispatch(updateUsername(data.username));
-
             dispatch(updateFirstname(data.firstname)); // Mettre à jour le firstname dans le reducer
             dispatch(updateLastname(data.lastname));
             //On veut récupérer l'objectId de vol
@@ -85,16 +82,12 @@ export default function StartScreen() {
               body: JSON.stringify(objetRequest),
             })
               .then((response) => response.json())
-              .then((dataFlight) => {
-                console.log("ça passe aussi ici dataFlight", dataFlight);
-                if (dataFlight.result) {
-                  console.log(dataFlight);
+              .then((dataFlights) => {
+                console.log("ça passe aussi ici dataFlight", dataFlights);
+                if (dataFlights.result) {
+                  console.log(dataFlights);
+                  dispatch(updateFlights(dataFlights))
 
-                  const { _id, flyNumber, date } = dataFlight.data[0];
-                  console.log("_id, flyNumber, date", _id, flyNumber, date);
-                  dispatch(updateFlightObjectId(_id));
-                  dispatch(updateFlyNumber(flyNumber));
-                  dispatch(updateDate(date));
                   // A Trouvé un vol donc il navigue avec un n° de vol et son id
                   navigation.navigate("TabNavigator", { screen: "Home" });
                 } else {
@@ -113,10 +106,10 @@ export default function StartScreen() {
   // C'est le boutton qui auto "login" Je l'ai mis en place pour gagner du temps
   const autoLogin = () => {
     dispatch(addToken("IjY0bA1PT-shvwqTZRKculkRbP3atUU-"));
-    dispatch(updateUsername("Devxi"));
+    dispatch(updateUsername("Devxv"));
     dispatch(updateDate("2023-05-01T00:00:00.000"));
     dispatch(updateFlyNumber("OZ110"));
-    dispatch(updateFlightObjectId("3lLVDtDGdyye2nTbYzz9ZcTME8gR4bgB"));
+    dispatch(updateFlightObjectId("646ce99142b37d8511b56de5"));
     navigation.navigate("TabNavigator", { screen: "Home" });
   };
   const autoLogin2 = () => {
@@ -137,13 +130,13 @@ export default function StartScreen() {
       >
         <Text style={styles.textButton}>AutoLogin noFetch Token+username</Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => autoLogin()}
         style={styles.button}
         activeOpacity={0.8}
       >
         <Text style={styles.textButton}>AutoLogin2 noFetch Token+username</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <View style={styles.titre}>
         <FontAwesome

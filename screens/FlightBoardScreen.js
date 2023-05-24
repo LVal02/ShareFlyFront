@@ -1,14 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  Animated,
-  Modal,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Animated, Modal, SafeAreaView, ScrollView } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
@@ -40,38 +31,62 @@ export default function FlightBoardScreen() {
   const [kilo, setKilo] = useState("");
   const [result, setResult] = useState("");
 
-  const [annonceKilo, setAnnonceKilo] = useState(null);
+  const [annonceKilo, setAnnonceKilo] = useState([]);
+  const [annonceOpen, setAnnonceOpen] = useState([]);
+
+
+  // useEffect(() => {
+  //     const requestBodyFetchKilo = {
+  //       token: user.token,
+  //       username: user.username,
+  //     };
+  
+  //     console.log("requestBodyFetchKilo", requestBodyFetchKilo);
+  
+  //     fetch("http://localhost:3000/index/kilos/all", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(requestBodyFetchKilo),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //   });
+  // }, []);
 
   useEffect(() => {
-    const resquestBodyFetchkilo = {
-      token: user.token,
-      username: user.username,
-      flight: user.flightObjectId,
-    };
-    console.log("resquestBodyFetchkilo", resquestBodyFetchkilo);
-    fetch("https://share-fly-backend.vercel.app/kilos/all", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(resquestBodyFetchkilo),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("kilos/all data:",data);
-        if (data.result === true) {
-          console.log("data", data);
-          setAnnonceKilo(data);
-        } else {
-          setErrorMessage("No Annonce found");
-          console.log(data.error);
-          setAnnonceKilo(dataKilo);
-        }
+    console.log(user.flights.length);
+    user.flights.map((flight) => {
+      const requestBodyFetchKilo = {
+        token: user.token,
+        username: user.username,
+        flight: flight.flightObjectId,
+      };
+  
+      console.log("requestBodyFetchKilo", requestBodyFetchKilo);
+  
+      fetch("http://192.168.110.74:3000/index/kilos/all", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBodyFetchKilo),
       })
-      .catch((error) => {
-        // setResult(`Error: ${error}`);
-        console.log(error);
-        // setAnnonceKilo(dataKilo);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("kilos/all data:", data);
+          if (data.result) {
+            setAnnonceKilo((arrayAnnonceKilo) => [...arrayAnnonceKilo, data]);
+          } else {
+            setErrorMessage("No Annonce found");
+            console.log(data.errorMessage);
+            //Bha du coup on envoie
+            // setAnnonceKilo((arrayAnnonceKilo) => [...arrayAnnonceKilo, dataKilo]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   }, []);
+  
 
   const handleAddKilo = () => {
     const requestBody = {
@@ -83,7 +98,6 @@ export default function FlightBoardScreen() {
       objectId: user.flightObjectId,
     };
     console.log("requestBody:", requestBody);
-
     // AJOUTER DES KILOS ICI
     fetch("https://share-fly-backend.vercel.app/kilos", {
       method: "POST",
@@ -103,46 +117,72 @@ export default function FlightBoardScreen() {
       });
   };
 
+  console.log("annonceKilo",annonceKilo);
   let kilosAnnonce;
-  kilosAnnonce = annonceKilo?.map((annonce) => {
+  kilosAnnonce = annonceKilo?.map((annonce, index) => {
     return (
-      <TouchableOpacity
-        style={styles.flightItem}
-        // onPress={handleToggle}
-        key={annonce._id}
-      >
-        <Text>Fly Number: {annonce.flight}</Text>
-        <Text>Date: {user.date}</Text>
-        <View style={[styles.dropdownContent]}>
+      <View key={index}>
+        <TouchableOpacity
+          style={styles.annoncesHeader}
+          onPress={() => {
+            const updatedAnnonceOpen = [...annonceOpen];
+            updatedAnnonceOpen[index] = !updatedAnnonceOpen[index];
+            setAnnonceOpen(updatedAnnonceOpen);
+          }}
+        >
+          <Text style={styles.containerHeader}>Fly Number: {annonce.flyNumber}</Text>
+          <Text style={styles.containerHeader}>Date: {annonce.date}</Text>
+        </TouchableOpacity>
+        {annonceOpen[index] && ( // Vérifier si l'annonce est ouverte
           <View>
-            <Text>Additional Content</Text>
-            <Text>Additional Content</Text>
-            <Text>Additional Content</Text>
+            {annonce.data.map((item, itemIndex) => (
+              <TouchableOpacity
+                style={styles.flightItem}
+                key={itemIndex}
+                onPress={() =>
+                  navigation.navigate("Contrat", {
+                    flightId: item.kiloId,
+                    date: annonce.date,
+                    kilo: item.kilo,
+                    user: item.username,
+                  })
+                }
+              >
+                <Text>Kilo: {item.kilo}</Text>
+                <Text>Username: {item.username}</Text>
+                <View style={[styles.dropdownContent]}>
+                  <TouchableOpacity
+                    style={styles.buttonBuy}
+                    onPress={() =>
+                      navigation.navigate("Contrat", {
+                        flightId: item.kiloId,
+                        date: annonce.date,
+                        kilo: item.kilo,
+                        user: item.username,
+                      })
+                    }
+                    activeOpacity={0.8}
+                  >
+                    <Text>Buy</Text>
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+            ))}
           </View>
-          <TouchableOpacity
-            style={styles.buttonBuy}
-            onPress={() =>
-              navigation.navigate("Contrat", {
-                flightId: annonce._id,
-                date: user.date,
-                kilo: annonce.kilo,
-                user: annonce.user,
-              })
-            }
-            activeOpacity={0.8}
-          >
-            <Text>Buy</Text>
-          </TouchableOpacity>
-        </View>
-      </TouchableOpacity>
+        )}
+      </View>
     );
   });
+  
+  
 
   const handleModalClose = () => {
     setModalVisible(false);
   };
 
   return (
+    <ScrollView contentContainerStyle={styles.container}>
+      
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
@@ -186,19 +226,28 @@ export default function FlightBoardScreen() {
 
       <Text style={styles.result}>{result}</Text>
 
-      {kilosAnnonce}
-
+      <ScrollView contentContainerStyle={styles.container}>
+        {kilosAnnonce}
+       </ScrollView>
       {/* {annonceKilo && (<Text>{errorMessage}</Text>) } */}
     </View>
+    </ScrollView>
+    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  
+  containerHeader: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 10,
   },
   square: {
     width: 100,
