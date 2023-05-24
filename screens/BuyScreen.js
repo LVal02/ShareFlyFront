@@ -53,8 +53,8 @@ export default function BuyScreen({ route }) {
         console.log(error);
       });
   };
+  
   const handleUpdateKiloBuy = () => {
-
     const requestBodyBuy = {
       id: kiloId,
       token: userOne.token,
@@ -62,23 +62,16 @@ export default function BuyScreen({ route }) {
       // Autres champs à mettre à jour si nécessaire
     };
     console.log("requestBodyBuy", requestBodyBuy);
-    fetch("http://localhost:3000/index/kilos/buy", {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+    fetch("http://192.168.110.74:3000/index/kilos/buy", {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBodyBuy),
     })
       .then(response => response.json())
       .then(result => {
-        console.log(result);
+        console.log("/index/kilos/buy",result);
         // Gérer la réponse de la mise à jour ici
       })
-      .catch(error => {
-        console.error("Erreur lors de la mise à jour du kilo :", error);
-        // Gérer les erreurs ici
-      });
   }
   
 
