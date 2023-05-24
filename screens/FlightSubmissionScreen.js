@@ -54,10 +54,15 @@ const handleSubmitFlight = () => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              objectId: data.objectId,
+              objectId: data.flight,
               token: user.token,
               username: user.username,
             }),
+          })
+          .then((response) => response.json())
+          .then((dataFlightAdd) => {
+            console.log("/flights/add dataFlightAdd:",dataFlightAdd);
+            dispatch(updateFlightObjectId(data.flight))
           })
         }
         setErrorMessage("Invalid input or already added");

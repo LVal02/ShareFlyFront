@@ -56,6 +56,7 @@ export default function FlightBoardScreen() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log("kilos/all data:",data);
         if (data.result === true) {
           console.log("data", data);
           setAnnonceKilo(data);
@@ -66,9 +67,9 @@ export default function FlightBoardScreen() {
         }
       })
       .catch((error) => {
-        setResult(`Error: ${error}`);
+        // setResult(`Error: ${error}`);
         console.log(error);
-        setAnnonceKilo(dataKilo);
+        // setAnnonceKilo(dataKilo);
       });
   }, []);
 
