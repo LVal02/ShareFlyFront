@@ -15,14 +15,14 @@ export default function ContratScreen({ route }) {
   console.log('Contrat user:', userName);
 
 //Déstructuration des éléments reçus par le flightBoard
-  const { flightId, kilo, user, date } = route.params;
+  const { kiloId, kilo, username, date, flyNumber, flightId} = route.params;
   console.log('Contrat route:', route);
 
-  if (!flightId) {
-    // Le cas où la propriété 'flightId' est manquante ou indéfinie
+  if (!kiloId) {
+    // Le cas où la propriété 'kiloId' est manquante ou indéfinie
     return (
       <View style={styles.container}>
-        <Text>Erreur: flightId est manquant</Text>
+        <Text>Erreur: kiloId est manquant</Text>
       </View>
     );
   }
@@ -40,10 +40,12 @@ export default function ContratScreen({ route }) {
       // Les deux conditions ont été validées, il peut donc naviguer vers le paiement
       console.log('Contrat accepté !');
       navigation.navigate('Buy', {
-        flightId: flightId,
+        kiloId: kiloId,
         date: date,
         kilo: kilo,
-        user: user,
+        username: username,
+        flyNumber: flyNumber,
+        flightId: flightId,
       });
     } else {
 
@@ -57,10 +59,10 @@ export default function ContratScreen({ route }) {
 
   return (
     <View style={styles.container}>
-      <Text>Flight ID: {flightId}</Text>
+      <Text>Flight ID: {kiloId}</Text>
       <Text>
         Je soussigné, <Text style={{ fontWeight: 'bold' }}>{userName}</Text>, déclare avoir pris connaissance du 
-        contrat avec le prestataire <Text style={{ fontWeight: 'bold' }}>{user}</Text>
+        contrat avec le prestataire <Text style={{ fontWeight: 'bold' }}>{username}</Text>
       </Text>
       <TouchableOpacity onPress={handleCheckbox1Change}>
         <View

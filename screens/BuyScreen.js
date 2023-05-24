@@ -11,16 +11,17 @@ export default function BuyScreen({ route }) {
   const [cardholderName, setCardholderName] = useState('');
   const [secretCode, setSecretCode] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
-
+  const [result, setResult] = useState('')
   const userOne = useSelector(state => state.user);
-  console.log('buyScreen route:', route);
+  console.log('buyScreen userOne:', userOne);
 
-  const { flightId, kilo, user, date } = route.params;
+  const { kiloId, kilo, username, date, flyNumber, flightId } = route.params;
+  console.log('buyScreen route.params:', route);
 
-  if (!flightId) {
+  if (!kiloId) {
     return (
       <View style={styles.container}>
-        <Text>Erreur: flightId est manquant</Text>
+        <Text>Erreur: kiloId est manquant</Text>
       </View>
     );
   }
@@ -28,10 +29,11 @@ export default function BuyScreen({ route }) {
   const handleBuyToCreateChat = () => {
     const requestBody = {
       token: userOne.token,
-      flyNumber: userOne.flyNumber,
-      date: userOne.date,
+      flyNumber: flyNumber,
+      date: date,
       username: userOne.username,
-      usernameTwo: user,
+      usernameTwo: username,
+      objectId: flightId,
     };
     console.log('requestBody:', requestBody);
 
@@ -42,21 +44,49 @@ export default function BuyScreen({ route }) {
     })
       .then(response => response.json())
       .then(data => {
-        navigation.navigate('TabNavigator', { screen: 'Chat' });
         setResult(data.result ? 'Chat created successfully' : `Error: ${data.error}`);
         console.log('Server Response:', data);
+        // navigation.navigate('TabNavigator', { screen: 'Chat' });
       })
       .catch(error => {
         setResult(`Error: ${error}`);
         console.log(error);
       });
   };
+  const handleUpdateKiloBuy = () => {
+
+    const requestBodyBuy = {
+      id: kiloId,
+      token: userOne.token,
+      username: userOne.username
+      // Autres champs à mettre à jour si nécessaire
+    };
+    console.log("requestBodyBuy", requestBodyBuy);
+    fetch("http://localhost:3000/index/kilos/buy", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBodyBuy),
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+        // Gérer la réponse de la mise à jour ici
+      })
+      .catch(error => {
+        console.error("Erreur lors de la mise à jour du kilo :", error);
+        // Gérer les erreurs ici
+      });
+  }
+  
 
   return (
     <View style={styles.container}>
       <View style={styles.containerCard}>
         <Text>Order Summary</Text>
-        <Text>Flight ID: {flightId}</Text>
+        <Text>kiloId ID: {kiloId}</Text>
         <Text>Payer les {kilo} Kg</Text>
         <Text>Pour le {date}</Text>
 
@@ -103,7 +133,7 @@ export default function BuyScreen({ route }) {
             />
           </View>
         </View>
-        <TouchableOpacity onPress={handleBuyToCreateChat} style={styles.button} activeOpacity={0.8}>
+        <TouchableOpacity onPress={() => {handleBuyToCreateChat();handleUpdateKiloBuy()}} style={styles.button} activeOpacity={0.8}>
           <Text style={styles.textButton}>Oui je paye</Text>
         </TouchableOpacity>
       </View>

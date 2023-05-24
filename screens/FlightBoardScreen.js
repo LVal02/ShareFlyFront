@@ -117,11 +117,13 @@ export default function FlightBoardScreen() {
       });
   };
 
-  console.log("annonceKilo",annonceKilo);
+  // console.log("annonceKilo",annonceKilo);
   let kilosAnnonce;
   kilosAnnonce = annonceKilo?.map((annonce, index) => {
+    // console.log("annonceKilo?.map((annonce :", annonce);
     return (
       <View key={index}>
+        
         <TouchableOpacity
           style={styles.annoncesHeader}
           onPress={() => {
@@ -130,8 +132,10 @@ export default function FlightBoardScreen() {
             setAnnonceOpen(updatedAnnonceOpen);
           }}
         >
+          
           <Text style={styles.containerHeader}>Fly Number: {annonce.flyNumber}</Text>
           <Text style={styles.containerHeader}>Date: {annonce.date}</Text>
+          
         </TouchableOpacity>
         {annonceOpen[index] && ( // Vérifier si l'annonce est ouverte
           <View>
@@ -141,30 +145,32 @@ export default function FlightBoardScreen() {
                 key={itemIndex}
                 onPress={() =>
                   navigation.navigate("Contrat", {
-                    flightId: item.kiloId,
+                    kiloId: item.kiloId,
                     date: annonce.date,
                     kilo: item.kilo,
-                    user: item.username,
+                    username: item.username,
+                    flyNumber: annonce.flyNumber,
+                    flightId: item.flightId,
                   })
                 }
               >
                 <Text>Kilo: {item.kilo}</Text>
                 <Text>Username: {item.username}</Text>
                 <View style={[styles.dropdownContent]}>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={styles.buttonBuy}
                     onPress={() =>
                       navigation.navigate("Contrat", {
-                        flightId: item.kiloId,
+                        kiloId: item.kiloId,
                         date: annonce.date,
                         kilo: item.kilo,
                         user: item.username,
                       })
                     }
                     activeOpacity={0.8}
-                  >
+                  > */}
                     <Text>Buy</Text>
-                  </TouchableOpacity>
+                  {/* </TouchableOpacity> */}
                 </View>
               </TouchableOpacity>
             ))}
@@ -181,7 +187,8 @@ export default function FlightBoardScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    // <SafeAreaView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} overScrollMode="always">
       
     <View style={styles.container}>
       <TouchableOpacity
@@ -232,7 +239,8 @@ export default function FlightBoardScreen() {
       {/* {annonceKilo && (<Text>{errorMessage}</Text>) } */}
     </View>
     </ScrollView>
-    
+    // </SafeAreaView>
+
   );
 }
 

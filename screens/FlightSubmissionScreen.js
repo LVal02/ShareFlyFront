@@ -45,7 +45,7 @@ const handleSubmitFlight = () => {
         dispatch(updateFlyNumber(flyNumber))
         dispatch(updateDate(dateInputed))
         dispatch(updateFlightObjectId(data.objectId))
-        // navigation.navigate('FlightBoard')
+        navigation.navigate('FlightBoard')
         // navigation.navigate('TabNavigator', { screen: 'Home' });
       } else {
         setError(data.error); // Update the error state with the specific error message
@@ -61,8 +61,10 @@ const handleSubmitFlight = () => {
           })
           .then((response) => response.json())
           .then((dataFlightAdd) => {
-            console.log("/flights/add dataFlightAdd:",dataFlightAdd);
-            dispatch(updateFlightObjectId(data.flight))
+            if (dataFlightAdd.result) {
+              dispatch(updateFlightObjectId(data.flight))
+              navigation.navigate('FlightBoard')
+            } else {setErrorMessage("Was not able to add")}
           })
         }
         setErrorMessage("Invalid input or already added");
