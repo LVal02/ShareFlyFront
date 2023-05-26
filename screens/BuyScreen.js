@@ -62,7 +62,7 @@ export default function BuyScreen({ route }) {
       // Autres champs à mettre à jour si nécessaire
     };
     console.log("requestBodyBuy", requestBodyBuy);
-    fetch("http://192.168.110.74:3000/index/kilos/buy", {
+    fetch("http://192.168.10.182:3000/index/kilos/buy", {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBodyBuy),

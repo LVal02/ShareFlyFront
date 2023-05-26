@@ -18,24 +18,7 @@ export default function FlightBoardScreen() {
   const navigation = useNavigation();
   const user = useSelector((state) => state.user);
   console.log("flightBoardScreen user:", user);
-
-  const dataKilo = [
-    {
-      _id: "64639b67a2c70f4fdfc7ffca",
-      flight: "555XXX",
-      kilo: "10",
-      user: "Franc",
-      __v: 3,
-    },
-    {
-      _id: "165165q4s89f48qs16161sd1",
-      flight: "555XXX",
-      kilo: "50",
-      user: "Max",
-      __v: 3,
-    },
-  ];
-
+  
   const [errorMessage, setErrorMessage] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [secondModalVisible, setSecondModalVisible] = useState(false);
@@ -80,7 +63,7 @@ export default function FlightBoardScreen() {
 
       console.log("requestBodyFetchKilo", requestBodyFetchKilo);
 
-      fetch("http://192.168.110.74:3000/index/kilos/all", {
+      fetch("http://192.168.10.182:3000/index/kilos/all", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBodyFetchKilo),
@@ -155,7 +138,7 @@ export default function FlightBoardScreen() {
   kilosAnnonce = annonceKilo?.map((annonce, index) => {
     // console.log("annonceKilo?.map((annonce :", annonce);
     return (
-      <View key={index}>
+      <View key={index} style={styles.annoncesContainer}>
         <TouchableOpacity
           style={styles.annoncesHeader}
           onPress={() => {
@@ -165,9 +148,9 @@ export default function FlightBoardScreen() {
           }}
         >
           <Text style={styles.containerHeader}>
-            Fly Number: {annonce.flyNumber}
+            Annonce pour le vol: {annonce.flyNumber}
           </Text>
-          <Text style={styles.containerHeader}>Date: {annonce.date}</Text>
+          <Text style={styles.containerHeader}>le {annonce.date}</Text>
         </TouchableOpacity>
         {annonceOpen[index] && ( // Vérifier si l'annonce est ouverte
           <View>
@@ -226,14 +209,17 @@ export default function FlightBoardScreen() {
       contentContainerStyle={styles.container}
       overScrollMode="always"
     >
-      <View style={styles.container}>
+      <View style={styles.containerAnnonce}>
+        <View style={styles.containerAnnonceAjout}>
+
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
-          style={styles.square}
+          style={styles.rectangle}
           activeOpacity={0.8}
-        >
-          <FontAwesome name="plus" size={24} color="black" />
+          >
+          <Text style={styles.buttonText}>Ajouter une annonce</Text>
         </TouchableOpacity>
+          </View>
 
         <Modal
           visible={modalVisible}
@@ -244,6 +230,7 @@ export default function FlightBoardScreen() {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <ScrollView contentContainerStyle={styles.modalContent}>
+                <Text style={[styles.selectedText, styles.selectFlightText ]}>Select a flight</Text>
                 {user.flights.map((oneFlight, index) => (
                   <TouchableOpacity
                     key={index}
@@ -300,7 +287,47 @@ export default function FlightBoardScreen() {
           {/* deuxième modal  */}
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text>Contenu de la deuxième modal</Text>
+              <View style={styles.containerInputRow}>
+              <TouchableOpacity
+  style={[styles.buttonIcon, styles.leftButton]}
+  onPress={() => setInputKilo((prevValue) => prevValue > 5 ? prevValue - 5 : 0)}
+  activeOpacity={0.8}
+>
+  <FontAwesome name="angle-double-left" size={24} color="#000" />
+</TouchableOpacity>
+
+<TouchableOpacity
+  style={[styles.buttonIcon,styles.leftButton]}
+  onPress={() => setInputKilo((prevValue) => prevValue > 0 ? prevValue - 1 : 0)}
+  activeOpacity={0.8}
+>
+  <FontAwesome name="angle-left" size={24} color="#000" />
+</TouchableOpacity>
+
+<TextInput
+  style={styles.input}
+  placeholder="Nombre de kilo à vendre"
+  keyboardType="numeric"
+  value={inputKilo.toString()}
+  onChangeText={(text) => setInputKilo(parseInt(text, 10))}
+/>
+
+<TouchableOpacity
+  style={[styles.buttonIcon,styles.rightButton]}
+  onPress={() => setInputKilo((prevValue) => prevValue + 1)}
+  activeOpacity={0.8}
+>
+  <FontAwesome name="angle-right" size={24} color="#000" />
+</TouchableOpacity>
+
+<TouchableOpacity
+  style={[styles.buttonIcon,styles.rightButton]}
+  onPress={() => setInputKilo((prevValue) => prevValue + 5)}
+  activeOpacity={0.8}
+>
+  <FontAwesome name="angle-double-right" size={24} color="#000" />
+</TouchableOpacity>
+              </View>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   onPress={handleReturnKiloToFlight}
@@ -309,6 +336,7 @@ export default function FlightBoardScreen() {
                 >
                   <Text style={styles.textButton}>Return</Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   onPress={handleConfirmKilo}
                   style={styles.confirmButton}
@@ -340,7 +368,122 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
+  containerAnnonce: {
+    flexGrow: 1,
+    marginTop: 150,
+    width:"90%",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  rectangle: {
+    width: 200,
+    height: 100,
+    backgroundColor: "rgba(138, 43, 226, 0.7)",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 0,
+    elevation: 1,
+  },
+  containerInputRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    justifyContent: 'center', // Centres the icon horizontally
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  buttonIcon:{
+    width: 35,
+    height: 35,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ccc',
+    marginHorizontal: 10,
+  },
+  leftButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  rightButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "black",
+    marginLeft: 5,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+    paddingLeft: 10,
+    marginRight: 10,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  returnButton: {
+    backgroundColor: "red",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+  },
+  confirmButton: {
+    backgroundColor: "green",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+  },
+  textButton: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  annoncesContainer:{
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    shadowColor: "rgba(255, 0, 0, 0.2)",
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 2,
+    }, 
+  annoncesHeader: {
+    alignItems: "center",
+    borderTopRightRadius: 5,
+    borderTopLeftRadius:5,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: "#966DE1",
+  },
+  containerAnnonceAjout:{
+    // marginTop: 150,
+    width: 200,
+    height: 100,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "white",
+  },
   containerHeader: {
     fontSize: 18,
     fontWeight: "bold",
@@ -384,6 +527,13 @@ const styles = StyleSheet.create({
   selectedText: {
     fontWeight: "bold",
   },
+  selectFlightText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "black",
+    marginLeft: 5,
+    alignSelf: "center",
+  },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -391,14 +541,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   confirmButton: {
-    backgroundColor: "#e8be4b",
+    backgroundColor: "#BBA6E0",
     borderRadius: 5,
     padding: 10,
     width: "45%",
     alignItems: "center",
   },
   returnButton: {
-    backgroundColor: "#e8be4b",
+    backgroundColor: "#BBA6E0",
     borderRadius: 5,
     padding: 10,
     width: "45%",
@@ -417,7 +567,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   flightItem: {
-    backgroundColor: "#e8be4b",
+    backgroundColor: "#BBA6E0",
     padding: 10,
     marginVertical: 5,
     borderRadius: 5,

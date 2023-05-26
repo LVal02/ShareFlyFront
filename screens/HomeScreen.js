@@ -16,7 +16,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     // Appeler la route backend pour récupérer les annonces kilo de l'utilisateur
-    fetch("http://192.168.110.74:3000/index/kilos/myKilo", {
+    fetch("http://192.168.10.182:3000/index/kilos/myKilo", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
