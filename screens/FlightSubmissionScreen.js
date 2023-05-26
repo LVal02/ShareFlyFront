@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Calendar } from 'react-native-calendars';
 import { useNavigation } from '@react-navigation/native';
-import { updateDate, updateFlightObjectId, updateFlyNumber } from '../reducers/user';
+import { addFlight, updateDate, updateFlightObjectId, updateFlyNumber } from '../reducers/user';
 
 
 // import DateInline from './TestDate';
@@ -27,6 +27,13 @@ console.log('flightSubmissionScreen user:',user);
 
 //Ici l'utilisateur mettra son n° et la date du vol
 const handleSubmitFlight = () => {
+  // const bodyReaquestDate = {
+  //   flyNumber: flyNumber,
+  //   token: user.token,
+  //   date: dateInputed,
+  //   username: user.username,
+  // }
+  // console.log("bodyReaquestDate",bodyReaquestDate);
   fetch("https://share-fly-backend.vercel.app/flights/create", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -41,10 +48,17 @@ const handleSubmitFlight = () => {
     .then((data) => {
       console.log("Data:", data);
       if (data.result) {
-        // console.log("data.rsult",data.result);
-        dispatch(updateFlyNumber(flyNumber))
-        dispatch(updateDate(dateInputed))
-        dispatch(updateFlightObjectId(data.objectId))
+        const bodyAddDate = {
+          flightObjectId: data.objectId,
+          flyNumber: flyNumber,
+          date: dateInputed+"T00:00:00.000Z",
+      }
+      console.log("bodyAddDate",bodyAddDate);
+        console.log("data.rsult",data);
+        // dispatch(updateFlyNumber(flyNumber))
+        // dispatch(updateDate(dateInputed))
+        // dispatch(updateFlightObjectId(data.objectId))
+        dispatch(addFlight(bodyAddDate))
         navigation.navigate('FlightBoard')
         // navigation.navigate('TabNavigator', { screen: 'Home' });
       } else {

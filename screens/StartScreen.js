@@ -86,7 +86,7 @@ export default function StartScreen() {
                 console.log("ça passe aussi ici dataFlight", dataFlights);
                 if (dataFlights.result) {
                   console.log(dataFlights);
-                  dispatch(updateFlights(dataFlights))
+                  dispatch(updateFlights(dataFlights));
 
                   // A Trouvé un vol donc il navigue avec un n° de vol et son id
                   navigation.navigate("TabNavigator", { screen: "Home" });
@@ -105,12 +105,9 @@ export default function StartScreen() {
 
   // C'est le boutton qui auto "login" Je l'ai mis en place pour gagner du temps
   const autoLogin = () => {
-    dispatch(addToken("IjY0bA1PT-shvwqTZRKculkRbP3atUU-"));
-    dispatch(updateUsername("Devxv"));
-    dispatch(updateDate("2023-05-01T00:00:00.000"));
-    dispatch(updateFlyNumber("OZ110"));
-    dispatch(updateFlightObjectId("646ce99142b37d8511b56de5"));
-    navigation.navigate("TabNavigator", { screen: "Home" });
+    setEmail("dev11@gmail.com");
+    setPassword("dev11@gmail.com");
+    handleSubmit();
   };
   const autoLogin2 = () => {
     dispatch(addToken("jJCTNkYXC5MxlG2LoStA8ycZQTUf9ypw"));
